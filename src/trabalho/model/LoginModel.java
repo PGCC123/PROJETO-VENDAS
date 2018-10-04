@@ -6,6 +6,9 @@ public class LoginModel {
     private String USU_LOGIN;
     private String USU_SENHA;
 
+    public LoginModel() {
+    }
+    
     public LoginModel(String USU_LOGIN, String USU_SENHA) {
         this.USU_LOGIN = USU_LOGIN;
         this.USU_SENHA = USU_SENHA;
