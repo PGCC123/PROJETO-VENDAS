@@ -1,0 +1,41 @@
+[33mcommit 1ad006af279cd8e95ab03e239ea45314025d07c9[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: Patrick Carpezani <patrick_gabriel.costa@hotmail.com>
+Date:   Tue Sep 18 11:10:06 2018 -0300
+
+    inclusao da classe PessoaView
+
+[33mcommit b5570cbd3ce757a86ea692328d2c0fd2cace3d13[m
+Author: Patrick Carpezani <patrick_gabriel.costa@hotmail.com>
+Date:   Tue Sep 18 10:18:19 2018 -0300
+
+    classes do projeto
+
+[33mcommit 90c02b2718ae8c9debb2cb4c179292a56f0a45d4[m
+Author: Patrick Carpezani <patrick_gabriel.costa@hotmail.com>
+Date:   Tue Sep 18 10:11:55 2018 -0300
+
+    inclusao da classe PessoaTableModel
+
+[33mcommit e9dfc25c8605691e93afa5af8c4b81bf777c308d[m
+Author: Patrick Carpezani <patrick_gabriel.costa@hotmail.com>
+Date:   Tue Sep 18 09:57:49 2018 -0300
+
+    modificacao na clase PessoaController
+
+[33mcommit 4d5d0dbc60823f8dd6401c45884038af4e7dac30[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: Patrick Carpezani <patrick_gabriel.costa@hotmail.com>
+Date:   Mon Sep 17 16:16:07 2018 -0300
+
+    modificacao na view de login com adicao do metodo dispose
+
+[33mcommit f54e96625d2db26c66ac0dc607ddda5fa50db757[m
+Author: Patrick Carpezani <patrick_gabriel.costa@hotmail.com>
+Date:   Mon Sep 17 16:11:28 2018 -0300
+
+    modificação no projeto na tela de login
+
+[33mcommit fbe5f5bc0e5b3169877e0875d31082180d9a7ead[m
+Author: Patrick Carpezani <patrick_gabriel.costa@hotmail.com>
+Date:   Mon Sep 17 15:58:32 2018 -0300
+
+    erp vendas
