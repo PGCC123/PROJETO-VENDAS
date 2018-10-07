@@ -17,7 +17,7 @@ import trabalho.controller.VendaController;
 import trabalho.controller.VendaProdutoController;
 import trabalho.dao.VendaDao;
 import trabalho.model.ClienteModel;
-import trabalho.model.LoginModel;
+import trabalho.model.PagamentoModel;
 import trabalho.model.ProdutoModel;
 import trabalho.model.UsuarioModel;
 import trabalho.model.VendaModel;
@@ -32,6 +32,7 @@ public class VendaView extends IMenu {
     private int flag;
     private float pro_preco;
     private String operacao;
+    FormaPagamentoView formapagto;
 
     private String getOperacao() {
         return operacao;
@@ -42,6 +43,7 @@ public class VendaView extends IMenu {
         // operacao=""(consulta), operacao="incluir"(inclusão), operacao="alterar"(alteração)
         this.operacao = operacao;
         btnGRAVAR.setEnabled(ativar);
+
     }
     // esse objeto será vinculado com a tabela
     // selecione o objeto tabela, clique em PROPRIEDADES e encontre MODEL
@@ -61,10 +63,9 @@ public class VendaView extends IMenu {
     public VendaView() {
         this.setPreferredSize(new Dimension(1300, 700));
         initComponents();
-        //setOperacao(""); // inicializa o form no modo CONSULTA
-        setLocationRelativeTo(null);
-        setVisible(true);
-        pack();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        this.pack();
     }
 
     private String filtroConsultaCli() {
@@ -250,6 +251,7 @@ public class VendaView extends IMenu {
         jScrollPane6 = new javax.swing.JScrollPane();
         TABLE_PRODUTO = new javax.swing.JTable();
         btnCALC = new javax.swing.JButton();
+        btnFINALIZAR_VENDA = new javax.swing.JButton();
         lblTitulo1 = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
@@ -562,9 +564,9 @@ public class VendaView extends IMenu {
             }
         });
 
+        edtVDA_VALOR.setEditable(false);
         edtVDA_VALOR.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         edtVDA_VALOR.setForeground(new java.awt.Color(102, 211, 130));
-        edtVDA_VALOR.setEnabled(false);
         edtVDA_VALOR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edtVDA_VALORActionPerformed(evt);
@@ -574,7 +576,7 @@ public class VendaView extends IMenu {
         lblVDA_VALOR.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblVDA_VALOR.setText("Valor");
 
-        edtVDA_DESCONTO.setEnabled(false);
+        edtVDA_DESCONTO.setEditable(false);
         edtVDA_DESCONTO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edtVDA_DESCONTOActionPerformed(evt);
@@ -587,9 +589,9 @@ public class VendaView extends IMenu {
         lblVDA_TOTAL.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblVDA_TOTAL.setText("SubTotal");
 
+        edtVDA_TOTAL.setEditable(false);
         edtVDA_TOTAL.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         edtVDA_TOTAL.setForeground(new java.awt.Color(102, 211, 130));
-        edtVDA_TOTAL.setEnabled(false);
         edtVDA_TOTAL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edtVDA_TOTALActionPerformed(evt);
@@ -618,6 +620,15 @@ public class VendaView extends IMenu {
         btnCALC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCALCActionPerformed(evt);
+            }
+        });
+
+        btnFINALIZAR_VENDA.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnFINALIZAR_VENDA.setText("FINALIZAR VENDA");
+        btnFINALIZAR_VENDA.setEnabled(false);
+        btnFINALIZAR_VENDA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFINALIZAR_VENDAActionPerformed(evt);
             }
         });
 
@@ -693,11 +704,17 @@ public class VendaView extends IMenu {
                         .addComponent(jScrollPane6)))
                 .addGap(18, 18, 18)
                 .addComponent(separadorCENTRAL, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(painelDADOSLayout.createSequentialGroup()
+                        .addGap(127, 127, 127)
+                        .addComponent(lblTITULO, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCALC))
+                    .addGroup(painelDADOSLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDADOSLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnCALC)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(painelDADOSLayout.createSequentialGroup()
                                 .addComponent(lblVDA_DESCONTO)
@@ -710,13 +727,11 @@ public class VendaView extends IMenu {
                             .addGroup(painelDADOSLayout.createSequentialGroup()
                                 .addComponent(lblVDA_TOTAL)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(edtVDA_TOTAL, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18))
+                                .addComponent(edtVDA_TOTAL, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(painelDADOSLayout.createSequentialGroup()
-                        .addGap(142, 142, 142)
-                        .addComponent(lblTITULO, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnFINALIZAR_VENDA)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         painelDADOSLayout.setVerticalGroup(
             painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -765,28 +780,27 @@ public class VendaView extends IMenu {
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(333, 333, 333))
                     .addGroup(painelDADOSLayout.createSequentialGroup()
-                        .addComponent(separadorCENTRAL, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDADOSLayout.createSequentialGroup()
-                        .addComponent(lblTITULO)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(edtVDA_VALOR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblVDA_VALOR)
-                            .addComponent(edtVDA_DESCONTO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblVDA_DESCONTO))
-                        .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(separadorCENTRAL, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(painelDADOSLayout.createSequentialGroup()
+                                .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnCALC)
+                                    .addComponent(lblTITULO, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(edtVDA_VALOR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblVDA_VALOR)
+                                    .addComponent(edtVDA_DESCONTO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblVDA_DESCONTO))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(edtVDA_TOTAL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblVDA_TOTAL)))
-                            .addGroup(painelDADOSLayout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(btnCALC)))
-                        .addGap(304, 304, 304))))
+                                    .addComponent(lblVDA_TOTAL))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnFINALIZAR_VENDA, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         jTabbedPane1.addTab("Dados da Venda", painelDADOS);
@@ -939,6 +953,7 @@ public class VendaView extends IMenu {
     }//GEN-LAST:event_btnSAIRActionPerformed
 
     private void btnADICIONA_PRODUTOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnADICIONA_PRODUTOActionPerformed
+
         adcVendaPro();
         try {
             String condicao = filtroConsultaItensVenda();
@@ -951,11 +966,12 @@ public class VendaView extends IMenu {
                 tabelaVendaProdutoModel = new VendaProdutoTableModel(listaVendaProduto, colunasItens);
                 TABLE_ITEMVENDA.setModel(tabelaVendaProdutoModel);
                 TABLE_ITEMVENDA.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                btnFINALIZAR_VENDA.setEnabled(true);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro na consulta do produtos!\n" + ex.getMessage());
         }
-        subTotal(); // mostra o valor no campo a baixo Valor.
+        subTotal(); // mostra o valor no campo a baixo subtotal.
     }//GEN-LAST:event_btnADICIONA_PRODUTOActionPerformed
 
     private void edtPRO_DESCONTOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtPRO_DESCONTOActionPerformed
@@ -1176,6 +1192,23 @@ public class VendaView extends IMenu {
         }
     }//GEN-LAST:event_btnCALCActionPerformed
 
+    private void btnFINALIZAR_VENDAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFINALIZAR_VENDAActionPerformed
+        try {
+            if (formapagto == null) {
+                formapagto = new FormaPagamentoView();
+                formapagto.setVisible(true);
+                formapagto.recebeSub(Double.valueOf(edtVDA_TOTAL.getText()));
+
+                formapagto.limpar();
+            } else {
+                 formapagto.setVisible(true);
+                 formapagto.setState(FormaPagamentoView.NORMAL);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possivel abrir, tente mais tarde!");
+        }
+    }//GEN-LAST:event_btnFINALIZAR_VENDAActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TABLE_CADASTRO;
     private javax.swing.JTable TABLE_ITEMVENDA;
@@ -1186,6 +1219,7 @@ public class VendaView extends IMenu {
     private javax.swing.JButton btnCALC;
     private javax.swing.JButton btnCONFIRMA_CLIENTE_USUARIO;
     private javax.swing.JButton btnEXCLUIR;
+    private javax.swing.JButton btnFINALIZAR_VENDA;
     private javax.swing.JButton btnGRAVAR;
     private javax.swing.JButton btnINCLUIR;
     private javax.swing.JButton btnNOVA_VENDA;

@@ -31,8 +31,6 @@ public class LoginDao {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possivel logar " + ex.getMessage());
         } finally {
-
-            //ConnectionFactory.closeConnection(con, stmt, rs);
             Conexao.fecharConexao();
         }
         return check;

@@ -47,4 +47,9 @@ public class PagamentoModel {
     public void setFPG_ATIVO(String FPG_ATIVO) {
         this.FPG_ATIVO = FPG_ATIVO;
     }
+
+    @Override
+    public String toString() {
+        return getFPG_NOME();
+    }
 }

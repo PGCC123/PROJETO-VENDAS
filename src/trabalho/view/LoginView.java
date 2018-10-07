@@ -40,7 +40,6 @@ public class LoginView extends javax.swing.JFrame {
         labelLogin.setText("Login");
 
         textUSU_LOGIN.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        textUSU_LOGIN.setText("patrick.carpezani@hotmail.com");
         textUSU_LOGIN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textUSU_LOGINActionPerformed(evt);
@@ -51,7 +50,6 @@ public class LoginView extends javax.swing.JFrame {
         labelSenha.setText("Senha");
 
         passUSU_SENHA.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        passUSU_SENHA.setText("12345");
         passUSU_SENHA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passUSU_SENHAActionPerformed(evt);

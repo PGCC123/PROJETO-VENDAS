@@ -101,4 +101,25 @@ public class PagamentoDao {
         stm.close();
         return lista;
     }
+
+    public ArrayList<PagamentoModel> populaCombo() throws SQLException {
+        ArrayList<PagamentoModel> lista = null;
+        PreparedStatement stm;
+        ResultSet rs;
+        String sql = "SELECT * FROM FORMAPAGTO";
+
+        stm = conexao.prepareStatement(sql);
+        rs = stm.executeQuery();
+        lista = new ArrayList<>();
+
+        while (rs.next()) {
+            PagamentoModel objusu = new PagamentoModel();
+            objusu.setFPG_CODIGO(rs.getInt("FPG_CODIGO"));
+            objusu.setFPG_NOME(rs.getString("FPG_NOME"));
+            lista.add(objusu);
+        }
+        rs.close();
+        stm.close();
+        return lista;
+    }
 }

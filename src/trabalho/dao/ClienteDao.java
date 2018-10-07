@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import trabalho.model.ClienteModel;
 import trabalho.model.PessoaModel;
-import trabalho.model.UsuarioModel;
 
 public class ClienteDao {
 

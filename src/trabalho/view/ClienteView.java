@@ -1,11 +1,8 @@
 package trabalho.view;
 
 import java.awt.Dimension;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -15,7 +12,6 @@ import trabalho.controller.ClienteController;
 import trabalho.controller.PessoaController;
 import trabalho.model.ClienteModel;
 import trabalho.model.PessoaModel;
-import trabalho.model.UsuarioModel;
 
 public class ClienteView extends IMenu {
 
@@ -354,6 +350,11 @@ public class ClienteView extends IMenu {
 
         edtPES_CODIGO.setEditable(false);
         edtPES_CODIGO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        edtPES_CODIGO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edtPES_CODIGOActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelDADOSLayout = new javax.swing.GroupLayout(painelDADOS);
         painelDADOS.setLayout(painelDADOSLayout);
@@ -1009,7 +1010,6 @@ public class ClienteView extends IMenu {
         edtCONS_ID1.setText("");
         edtCONS_ID2.setText("");
         edtCONS_NOME.setText("");
-        // edtCONS_LOGIN.setText("");
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnEXCLUIRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEXCLUIRActionPerformed
@@ -1084,6 +1084,10 @@ public class ClienteView extends IMenu {
     private void edtCLI_EMAILActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtCLI_EMAILActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_edtCLI_EMAILActionPerformed
+
+    private void edtPES_CODIGOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtPES_CODIGOActionPerformed
+
+    }//GEN-LAST:event_edtPES_CODIGOActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
