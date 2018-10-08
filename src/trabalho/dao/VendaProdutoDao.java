@@ -151,8 +151,6 @@ public class VendaProdutoDao {
 
             VendaProdutoModel vendaprodutomodel = new VendaProdutoModel();
             vendaprodutomodel.setVEP_TOTAL(rs.getDouble("SUM(VEP_TOTAL)"));
-            //venda.setVda_codigo(rs.getInt("vda_codigo"));
-            // vendaProduto.setVenda(venda);
             lista.add(vendaprodutomodel);
         }
 

@@ -1,6 +1,7 @@
 package trabalho.view;
 
 import java.awt.Dimension;
+import java.awt.HeadlessException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -871,12 +872,7 @@ public class ClienteView extends IMenu {
             }
             condicao += "(PES_NOME LIKE ('%" + edtCONS_NOME.getText() + "%'))";
         }
-        /*  if (!edtCONS_LOGIN.getText().trim().equals("")) {
-            if (!condicao.isEmpty()) {
-                condicao += " AND ";
-            }
-            condicao += "(CLI_LOGIN LIKE ('%" + edtCONS_LOGIN.getText() + "%'))";
-        } */
+        
         return condicao;
     }
 
@@ -950,7 +946,7 @@ public class ClienteView extends IMenu {
                  
                 JOptionPane.showMessageDialog(null, "Dados Gravados com Sucesso");
                 consultar();
-            } catch (Exception ex) {
+            } catch (HeadlessException | NumberFormatException | SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Erro na Gravação \n" + ex.getMessage());
             }
         }
@@ -1018,7 +1014,7 @@ public class ClienteView extends IMenu {
                 "Confirmação", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             try {
                 PessoaModel objpessoa = new PessoaModel();
-                objpessoa.setPES_CODIGO(Integer.parseInt(edtCLI_CODIGO.getText()));
+                objpessoa.setPES_CODIGO(Integer.parseInt(edtCLI_CODIGO.getText())); // dar um aolhada 
                 objpessoa.setPES_NOME(edtCLI_NOME.getText());
                 objpessoa.setPES_FISICA(comboCLI_FISICA.getSelectedItem().toString());
                 objpessoa.setPES_CPFCNPJ(textCLI_CPF.getText());

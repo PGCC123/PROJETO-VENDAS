@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import trabalho.conexao.Conexao;
 import trabalho.dao.LoginDao;
+import trabalho.model.UsuarioModel;
 
 public class LoginView extends javax.swing.JFrame {
 
@@ -160,12 +161,31 @@ public class LoginView extends javax.swing.JFrame {
     private void buttonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEntrarActionPerformed
 
         LoginDao executar = new LoginDao();
+        UsuarioModel usuario = new UsuarioModel();
+
+      /*  try {
+            if (usuario.getUSU_ATIVO().equals("ATIVO") == true) {
+                if (executar.checkLogin(textUSU_LOGIN.getText(), passUSU_SENHA.getText())) {
+
+                    this.dispose();
+                    PrincipalView principalview = new PrincipalView();
+                    principalview.setVisible(true);
+
+                } else {
+
+                    JOptionPane.showMessageDialog(null, "Usúario ou senha incorreta, tente novamente!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "efrethr");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Por motivos deconhecidos não foi possivel logar" + ex.getMessage());
+        } */
 
         try {
             if (executar.checkLogin(textUSU_LOGIN.getText(), passUSU_SENHA.getText())) {
-
-                dispose();
-                // JOptionPane.showMessageDialog(null, "Bem-Vindo ao Sales System!");
+                    
+                this.dispose();
                 PrincipalView principalview = new PrincipalView();
                 principalview.setVisible(true);
 
@@ -175,7 +195,7 @@ public class LoginView extends javax.swing.JFrame {
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Por motivos deconhecidos não foi possivel logar" + ex.getMessage());
-        }
+        } 
     }//GEN-LAST:event_buttonEntrarActionPerformed
 
     private void buttonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCadastrarActionPerformed
@@ -193,7 +213,7 @@ public class LoginView extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Para logar insira seu e-mail e sua senha corporativa.", "Menssagem", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_labelAjudaMouseClicked
 
-  /*  public static void main(String args[]) {
+    /*  public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

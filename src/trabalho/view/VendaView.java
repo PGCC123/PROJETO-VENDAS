@@ -5,10 +5,9 @@ import java.awt.HeadlessException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 import trabalho.conexao.Conexao;
 import trabalho.controller.ClienteController;
 import trabalho.controller.ProdutoController;
@@ -17,7 +16,6 @@ import trabalho.controller.VendaController;
 import trabalho.controller.VendaProdutoController;
 import trabalho.dao.VendaDao;
 import trabalho.model.ClienteModel;
-import trabalho.model.PagamentoModel;
 import trabalho.model.ProdutoModel;
 import trabalho.model.UsuarioModel;
 import trabalho.model.VendaModel;
@@ -119,13 +117,37 @@ public class VendaView extends IMenu {
         edtPRO_QTDE.setText("");
         edtPRO_PRECO.setText("");
     }
+    
+     public void limparFrame() { // tem como funcionalidade resetar o JFrame.
+
+        edtCLI_CODIGO.setText("");
+        edtVDA_CODIGO.setText("");
+        edtUSU_CODIGO.setText("");
+        edtUSU_NOME.setText("");
+        edtCLI_NOME.setText("");
+
+        TABLE_CADASTRO.setModel(new DefaultTableModel());
+        TABLE_PRODUTO.setModel(new DefaultTableModel());
+        TABLE_ITEMVENDA.setModel(new DefaultTableModel());
+
+        edtPRO_CODIGO.setText("");
+        edtPRO_NOME.setText("");
+        edtPRO_PRECO.setText("");
+        edtPRO_QTDE.setText("");
+        edtPRO_DESCONTO.setText("0");
+        edtVDA_TOTAL.setText("");
+
+        btnPESQUISA_USUARIO.setEnabled(true);
+        btnPESQUISA_CLIENTE.setEnabled(true);
+        btnCONFIRMA_CLIENTE_USUARIO.setEnabled(true);
+        btnADICIONA_PRODUTO.setEnabled(false);
+        btnFINALIZAR_VENDA.setEnabled(false);
+    }
 
     private void mostrar(VendaModel venda) {
         edtVDA_CODIGO.setText(String.valueOf(venda.getVDA_CODIGO()));
         edtCLI_NOME.setText(venda.getCLI_MODEL().getPessoamodel().getPES_NOME());
         edtUSU_NOME.setText((venda.getUSU_MODEL().getUSU_NOME()));
-        //edtPRO_NOME.setText(vendapro.getPRO_MODEL().getPRO_NOME());
-        //edtPRO_PRECO.setText(String.valueOf(vendapro.getPRO_MODEL().getPRO_PRECO()));
     }
 
     private void mostrarRegistro(int registro) {
@@ -1201,14 +1223,16 @@ public class VendaView extends IMenu {
 
                 formapagto.limpar();
             } else {
-                 formapagto.setVisible(true);
-                 formapagto.setState(FormaPagamentoView.NORMAL);
+                formapagto.setVisible(true);
+                formapagto.setState(FormaPagamentoView.NORMAL);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Não foi possivel abrir, tente mais tarde!");
         }
-    }//GEN-LAST:event_btnFINALIZAR_VENDAActionPerformed
 
+        this.limparFrame(); // modificar com o tempo 
+    }//GEN-LAST:event_btnFINALIZAR_VENDAActionPerformed
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TABLE_CADASTRO;
     private javax.swing.JTable TABLE_ITEMVENDA;

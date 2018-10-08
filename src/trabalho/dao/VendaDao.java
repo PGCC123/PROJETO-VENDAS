@@ -35,8 +35,8 @@ public class VendaDao {
         } catch (Exception erro) {
             return 1;
         }
-    }
-
+    } 
+        
     public void adicionar(VendaModel venda) throws SQLException {
         String sql = "INSERT INTO VENDA (USU_CODIGO, CLI_CODIGO, VDA_DATA) VALUES (?, ?,?)";
         PreparedStatement stm = conexao.prepareStatement(sql);

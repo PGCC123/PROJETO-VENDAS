@@ -19,14 +19,14 @@ public class VendaPagtoDao {
     }
 
     public void adicionar(VendaPagtoModel vendapagto) throws SQLException {
-     ///   VendaDao vendadao = new VendaDao();
+      // VendaDao vendadao = new VendaDao();
        // vendadao.adicionar(vendapagto.getVDA_MODEL());
 
         //int vda_codigo = vendadao.ultimaVenda();
 
         String sql = "INSERT INTO VENDA_PAGTO (VDA_CODIGO, FPG_CODIGO, VDP_VALOR) VALUES (?, ?, ?)";
         PreparedStatement stm = conexao.prepareStatement(sql);
-      //  stm.setInt(1, vda_codigo);
+        //stm.setInt(1, vda_codigo);
         stm.setInt(1, vendapagto.getVDA_MODEL().getVDA_CODIGO());
         stm.setInt(2, vendapagto.getFPG_MODEL().getFPG_CODIGO());
         stm.setDouble(3, vendapagto.getVDP_VALOR());
