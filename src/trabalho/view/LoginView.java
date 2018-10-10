@@ -213,15 +213,6 @@ public class LoginView extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Para logar insira seu e-mail e sua senha corporativa.", "Menssagem", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_labelAjudaMouseClicked
 
-    /*  public static void main(String args[]) {
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginView().setVisible(true);
-            }
-        });
-    } */
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCadastrar;
     private javax.swing.JButton buttonEntrar;

@@ -3,10 +3,18 @@ package trabalho.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import trabalho.conexao.Conexao;
@@ -14,6 +22,7 @@ import trabalho.controller.ClienteController;
 import trabalho.controller.PessoaController;
 import trabalho.model.ClienteModel;
 import trabalho.model.PessoaModel;
+import trabalho.model.UsuarioModel;
 
 public class ClienteView extends IMenu {
 
@@ -147,6 +156,11 @@ public class ClienteView extends IMenu {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblConsulta = new javax.swing.JTable();
         lblTitulo = new javax.swing.JLabel();
+        lblDATA = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        lblHORA = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lblUSUARIO = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -165,6 +179,11 @@ public class ClienteView extends IMenu {
         setTitle("Sistema Vendas");
         setFocusable(false);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(null);
 
         jToolBar1.setRollover(true);
@@ -407,9 +426,7 @@ public class ClienteView extends IMenu {
                 .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblCLI_FISICA)
                     .addComponent(lblCLI_LIMITECRED)
-                    .addGroup(painelDADOSLayout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addComponent(lblUSU_ATIVO)))
+                    .addComponent(lblUSU_ATIVO))
                 .addGap(18, 18, 18)
                 .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(comboCLI_ATIVO, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -799,6 +816,28 @@ public class ClienteView extends IMenu {
         getContentPane().add(lblTitulo);
         lblTitulo.setBounds(550, 90, 299, 29);
 
+        lblDATA.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        getContentPane().add(lblDATA);
+        lblDATA.setBounds(1190, 80, 100, 30);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Data Atual:");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(1110, 80, 70, 30);
+
+        lblHORA.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        getContentPane().add(lblHORA);
+        lblHORA.setBounds(1190, 120, 100, 30);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("Hora Atual:");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(1110, 120, 70, 30);
+
+        lblUSUARIO.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(lblUSUARIO);
+        lblUSUARIO.setBounds(1120, 180, 170, 30);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -875,6 +914,10 @@ public class ClienteView extends IMenu {
                 }
             }
         }); */
+    }
+    
+    public void mostrarUSU(UsuarioModel usuario) {
+        lblUSUARIO.setText(usuario.getUSU_NOME());
     }
 
     private boolean validacao() {
@@ -981,15 +1024,15 @@ public class ClienteView extends IMenu {
         setOperacao("incluir");
         edtCLI_CADASTRO.setFocusable(true);
     }//GEN-LAST:event_btnINCLUIRActionPerformed
-     
-   
+
+
     private void btnGRAVARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGRAVARActionPerformed
-       
+
         if (JOptionPane.showConfirmDialog(null, "Confirma Gravação deste Cliente?",
                 "Confirmação", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             try {
-                
-                 this.validacao();
+
+                this.validacao();
                 PessoaModel objpessoa = new PessoaModel();
                 ClienteModel objcliente = new ClienteModel();
 
@@ -1026,8 +1069,8 @@ public class ClienteView extends IMenu {
                 consultar();
             } catch (HeadlessException | NumberFormatException | SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Os campos com * devem ser preenchidos!\n\n "
-                                                                                    + "Erro na Gravação \n" 
-                                                                                      + ex.getMessage());
+                        + "Erro na Gravação \n"
+                        + ex.getMessage());
             }
         }
     }//GEN-LAST:event_btnGRAVARActionPerformed
@@ -1066,7 +1109,7 @@ public class ClienteView extends IMenu {
         if (registro >= 0 && registro < lista.size()) {
             // exibe os dados do registro na aba Dados
             mostrar(lista.get(registro));
-
+           
             // posicionar o registro selecionado na tabela (JTable)
             tblConsulta.changeSelection(registro, 0, false, false);
         }
@@ -1241,6 +1284,16 @@ public class ClienteView extends IMenu {
         }
     }//GEN-LAST:event_edtCLI_CELULARKeyTyped
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        //funcionalidade de mostrar a data atual.
+        Calendar c1 = Calendar.getInstance(new Locale("pt-br"));
+        lblDATA.setText(c1.get(Calendar.DAY_OF_MONTH) + "/" + c1.get(Calendar.DATE) + "/" + c1.get(Calendar.YEAR));
+
+        //hora 
+        Timer time = new Timer(1000, new hora());
+        time.start();
+    }//GEN-LAST:event_formWindowOpened
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnALTERAR;
@@ -1277,6 +1330,8 @@ public class ClienteView extends IMenu {
     private javax.swing.JTextField edtCONS_ID2;
     private javax.swing.JTextField edtCONS_NOME;
     private javax.swing.JTextField edtPES_CODIGO;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1309,7 +1364,10 @@ public class ClienteView extends IMenu {
     private javax.swing.JLabel lblCONS_ID;
     private javax.swing.JLabel lblCONS_NOME;
     private javax.swing.JLabel lblCodigo2;
+    private javax.swing.JLabel lblDATA;
+    private javax.swing.JLabel lblHORA;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblUSUARIO;
     private javax.swing.JLabel lblUSU_ATIVO;
     private javax.swing.JLabel lblUSU_CADASTRO;
     private javax.swing.JLabel lblVALIDACAO_CADASTRO;
@@ -1323,4 +1381,13 @@ public class ClienteView extends IMenu {
     private javax.swing.JPanel painelDADOS;
     private javax.swing.JTable tblConsulta;
     // End of variables declaration//GEN-END:variables
+
+    //classe interna com funcionalidade de mostrar a hora atual.
+    class hora implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            Calendar now = Calendar.getInstance();
+            lblHORA.setText(String.format("%1$tH:%1$tM:%1$tS", now));
+        }
+    }
 }
