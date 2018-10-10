@@ -1,5 +1,6 @@
 package trabalho.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
@@ -87,20 +88,25 @@ public class ClienteView extends IMenu {
         lblCLI_CODIGO = new javax.swing.JLabel();
         lblCLI_NOME = new javax.swing.JLabel();
         edtCLI_CODIGO = new javax.swing.JTextField();
-        edtCLI_NOME = new javax.swing.JTextField();
+        edtCLI_CADASTRO = new javax.swing.JTextField();
         lblUSU_ATIVO = new javax.swing.JLabel();
         comboCLI_ATIVO = new javax.swing.JComboBox<>();
         lblUSU_CADASTRO = new javax.swing.JLabel();
-        textCLI_CPF = new javax.swing.JFormattedTextField();
         lblCLI_FISICA = new javax.swing.JLabel();
         comboCLI_FISICA = new javax.swing.JComboBox<>();
         lblCLI_CPF = new javax.swing.JLabel();
-        textCLI_CADASTRO = new javax.swing.JFormattedTextField();
         lblCLI_RG = new javax.swing.JLabel();
-        textCLI_RG = new javax.swing.JFormattedTextField();
         lblCLI_LIMITECRED = new javax.swing.JLabel();
         edtCLI_LIMITECRED = new javax.swing.JTextField();
         edtPES_CODIGO = new javax.swing.JTextField();
+        lblVALIDACAO_NOME = new javax.swing.JLabel();
+        lblVALIDACAO_CPF = new javax.swing.JLabel();
+        lblVALIDACAO_RG = new javax.swing.JLabel();
+        lblVALIDACAO_CADASTRO = new javax.swing.JLabel();
+        lblVALIDACAO_LIMITECRED = new javax.swing.JLabel();
+        edtCLI_CPF = new javax.swing.JTextField();
+        edtCLI_NOME = new javax.swing.JTextField();
+        edtCLI_RG = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         lblCLI_ENDERECO = new javax.swing.JLabel();
         edtCLI_ENDERECO = new javax.swing.JTextField();
@@ -115,16 +121,18 @@ public class ClienteView extends IMenu {
         lblCLI_UF = new javax.swing.JLabel();
         comboCLI_UF = new javax.swing.JComboBox<>();
         lblCLI_CEP = new javax.swing.JLabel();
-        textCLI_CEP = new javax.swing.JFormattedTextField();
+        edtCLI_CEP = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         lblCLI_FONE1 = new javax.swing.JLabel();
         lblCLI_FONE2 = new javax.swing.JLabel();
-        textCLI_FONE1 = new javax.swing.JFormattedTextField();
-        textCLI_FONE2 = new javax.swing.JFormattedTextField();
         lblCLI_CELULAR = new javax.swing.JLabel();
-        textCLI_CELULAR = new javax.swing.JFormattedTextField();
         lblCLI_EMAIL = new javax.swing.JLabel();
         edtCLI_EMAIL = new javax.swing.JTextField();
+        lblVALIDACAO_TELEFONE1 = new javax.swing.JLabel();
+        lblVALIDACAO_CELULAR = new javax.swing.JLabel();
+        edtCLI_FONE1 = new javax.swing.JTextField();
+        edtCLI_FONE2 = new javax.swing.JTextField();
+        edtCLI_CELULAR = new javax.swing.JTextField();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         painelCONSULTA = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -290,10 +298,13 @@ public class ClienteView extends IMenu {
         edtCLI_CODIGO.setEditable(false);
         edtCLI_CODIGO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        edtCLI_NOME.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        edtCLI_NOME.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtCLI_NOMEActionPerformed(evt);
+        edtCLI_CADASTRO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        edtCLI_CADASTRO.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                edtCLI_CADASTROKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                edtCLI_CADASTROKeyTyped(evt);
             }
         });
 
@@ -304,14 +315,7 @@ public class ClienteView extends IMenu {
         comboCLI_ATIVO.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ATIVO", "INATIVO" }));
 
         lblUSU_CADASTRO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblUSU_CADASTRO.setText("Cadastro");
-
-        try {
-            textCLI_CPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        textCLI_CPF.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblUSU_CADASTRO.setText("Data");
 
         lblCLI_FISICA.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCLI_FISICA.setText("Física?");
@@ -322,38 +326,46 @@ public class ClienteView extends IMenu {
         lblCLI_CPF.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCLI_CPF.setText("CPF");
 
-        try {
-            textCLI_CADASTRO.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        textCLI_CADASTRO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
         lblCLI_RG.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCLI_RG.setText("RG");
-
-        try {
-            textCLI_RG.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###-#")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        textCLI_RG.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         lblCLI_LIMITECRED.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCLI_LIMITECRED.setText("Limite de Crédito ");
 
         edtCLI_LIMITECRED.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        edtCLI_LIMITECRED.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtCLI_LIMITECREDActionPerformed(evt);
-            }
-        });
 
         edtPES_CODIGO.setEditable(false);
         edtPES_CODIGO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        edtPES_CODIGO.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtPES_CODIGOActionPerformed(evt);
+
+        lblVALIDACAO_NOME.setText("*");
+
+        lblVALIDACAO_CPF.setText("*");
+
+        lblVALIDACAO_RG.setText("*");
+
+        lblVALIDACAO_CADASTRO.setText("*");
+
+        lblVALIDACAO_LIMITECRED.setText("*");
+
+        edtCLI_CPF.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        edtCLI_CPF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                edtCLI_CPFKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                edtCLI_CPFKeyTyped(evt);
+            }
+        });
+
+        edtCLI_NOME.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        edtCLI_RG.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        edtCLI_RG.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                edtCLI_RGKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                edtCLI_RGKeyTyped(evt);
             }
         });
 
@@ -361,40 +373,52 @@ public class ClienteView extends IMenu {
         painelDADOS.setLayout(painelDADOSLayout);
         painelDADOSLayout.setHorizontalGroup(
             painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDADOSLayout.createSequentialGroup()
+            .addGroup(painelDADOSLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblUSU_CADASTRO)
+                    .addComponent(lblCLI_RG)
+                    .addComponent(lblCLI_CPF)
+                    .addComponent(lblCLI_NOME)
+                    .addComponent(lblCLI_CODIGO))
+                .addGap(18, 18, 18)
+                .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelDADOSLayout.createSequentialGroup()
-                        .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblCLI_RG)
-                            .addComponent(lblCLI_CPF)
-                            .addComponent(lblCLI_NOME)
-                            .addComponent(lblCLI_CODIGO))
+                        .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(edtCLI_CADASTRO)
+                            .addComponent(edtCLI_RG, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(painelDADOSLayout.createSequentialGroup()
-                                .addComponent(edtCLI_CODIGO, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(edtPES_CODIGO, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(edtCLI_NOME, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textCLI_CPF, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textCLI_RG, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblVALIDACAO_RG)
+                            .addComponent(lblVALIDACAO_CADASTRO)))
                     .addGroup(painelDADOSLayout.createSequentialGroup()
-                        .addComponent(lblUSU_CADASTRO)
+                        .addComponent(edtCLI_CODIGO, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(textCLI_CADASTRO, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(125, 125, 125)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                        .addComponent(edtPES_CODIGO, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(painelDADOSLayout.createSequentialGroup()
+                        .addComponent(edtCLI_CPF, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblVALIDACAO_CPF))
+                    .addGroup(painelDADOSLayout.createSequentialGroup()
+                        .addComponent(edtCLI_NOME, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblVALIDACAO_NOME)))
+                .addGap(50, 50, 50)
                 .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblCLI_FISICA)
-                    .addComponent(lblUSU_ATIVO)
-                    .addComponent(lblCLI_LIMITECRED))
+                    .addComponent(lblCLI_LIMITECRED)
+                    .addGroup(painelDADOSLayout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(lblUSU_ATIVO)))
                 .addGap(18, 18, 18)
                 .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(comboCLI_ATIVO, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edtCLI_LIMITECRED, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(painelDADOSLayout.createSequentialGroup()
+                        .addComponent(edtCLI_LIMITECRED, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblVALIDACAO_LIMITECRED))
                     .addComponent(comboCLI_FISICA, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(262, 262, 262))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
         painelDADOSLayout.setVerticalGroup(
             painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -408,25 +432,30 @@ public class ClienteView extends IMenu {
                     .addComponent(edtPES_CODIGO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(edtCLI_NOME, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCLI_NOME)
                     .addComponent(lblUSU_ATIVO, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboCLI_ATIVO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboCLI_ATIVO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblVALIDACAO_NOME)
+                    .addComponent(edtCLI_NOME, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCLI_CPF)
-                    .addComponent(textCLI_CPF, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCLI_LIMITECRED)
-                    .addComponent(edtCLI_LIMITECRED, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
+                    .addComponent(edtCLI_LIMITECRED, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblVALIDACAO_CPF)
+                    .addComponent(lblVALIDACAO_LIMITECRED)
+                    .addComponent(edtCLI_CPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textCLI_RG, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCLI_RG))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                    .addComponent(lblVALIDACAO_RG)
+                    .addComponent(lblCLI_RG)
+                    .addComponent(edtCLI_RG, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textCLI_CADASTRO, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblUSU_CADASTRO))
-                .addGap(21, 21, 21))
+                    .addComponent(lblVALIDACAO_CADASTRO)
+                    .addComponent(lblUSU_CADASTRO)
+                    .addComponent(edtCLI_CADASTRO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Dados Pessoais", painelDADOS);
@@ -435,51 +464,26 @@ public class ClienteView extends IMenu {
         lblCLI_ENDERECO.setText("Endereço");
 
         edtCLI_ENDERECO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        edtCLI_ENDERECO.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtCLI_ENDERECOActionPerformed(evt);
-            }
-        });
 
         lblCLI_NUMERO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCLI_NUMERO.setText("N°");
 
         edtCLI_NUMERO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        edtCLI_NUMERO.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtCLI_NUMEROActionPerformed(evt);
-            }
-        });
 
         lblCLI_COMPLEMENTO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCLI_COMPLEMENTO.setText("Complemento");
 
         edtCLI_COMPLEMENTO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        edtCLI_COMPLEMENTO.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtCLI_COMPLEMENTOActionPerformed(evt);
-            }
-        });
 
         lblCLI_BAIRRO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCLI_BAIRRO.setText("Bairro");
 
         edtCLI_BAIRRO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        edtCLI_BAIRRO.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtCLI_BAIRROActionPerformed(evt);
-            }
-        });
 
         lblCLI_CIDADE.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCLI_CIDADE.setText("Cidade");
 
         edtCLI_CIDADE.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        edtCLI_CIDADE.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtCLI_CIDADEActionPerformed(evt);
-            }
-        });
 
         lblCLI_UF.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCLI_UF.setText("UF");
@@ -490,12 +494,15 @@ public class ClienteView extends IMenu {
         lblCLI_CEP.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCLI_CEP.setText("CEP");
 
-        try {
-            textCLI_CEP.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        textCLI_CEP.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        edtCLI_CEP.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        edtCLI_CEP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                edtCLI_CEPKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                edtCLI_CEPKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -525,7 +532,7 @@ public class ClienteView extends IMenu {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(edtCLI_CIDADE, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
                                     .addComponent(edtCLI_COMPLEMENTO, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-                                    .addComponent(textCLI_CEP))
+                                    .addComponent(edtCLI_CEP, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addComponent(lblCLI_UF)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -556,11 +563,11 @@ public class ClienteView extends IMenu {
                     .addComponent(edtCLI_CIDADE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCLI_UF)
                     .addComponent(comboCLI_UF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCLI_CEP)
-                    .addComponent(textCLI_CEP, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(edtCLI_CEP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Endereço", jPanel1);
@@ -571,37 +578,45 @@ public class ClienteView extends IMenu {
         lblCLI_FONE2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCLI_FONE2.setText("Telefone 2");
 
-        try {
-            textCLI_FONE1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        textCLI_FONE1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        try {
-            textCLI_FONE2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        textCLI_FONE2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
         lblCLI_CELULAR.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCLI_CELULAR.setText("Celular");
-
-        try {
-            textCLI_CELULAR.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) 9####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        textCLI_CELULAR.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         lblCLI_EMAIL.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCLI_EMAIL.setText("E-mail");
 
         edtCLI_EMAIL.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        edtCLI_EMAIL.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtCLI_EMAILActionPerformed(evt);
+
+        lblVALIDACAO_TELEFONE1.setText("*");
+
+        lblVALIDACAO_CELULAR.setText("*");
+
+        edtCLI_FONE1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        edtCLI_FONE1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                edtCLI_FONE1KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                edtCLI_FONE1KeyTyped(evt);
+            }
+        });
+
+        edtCLI_FONE2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        edtCLI_FONE2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                edtCLI_FONE2KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                edtCLI_FONE2KeyTyped(evt);
+            }
+        });
+
+        edtCLI_CELULAR.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        edtCLI_CELULAR.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                edtCLI_CELULARKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                edtCLI_CELULARKeyTyped(evt);
             }
         });
 
@@ -615,7 +630,9 @@ public class ClienteView extends IMenu {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lblCLI_FONE1)
                         .addGap(18, 18, 18)
-                        .addComponent(textCLI_FONE1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(edtCLI_FONE1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblVALIDACAO_TELEFONE1))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblCLI_CELULAR)
@@ -623,9 +640,12 @@ public class ClienteView extends IMenu {
                             .addComponent(lblCLI_EMAIL))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(textCLI_FONE2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textCLI_CELULAR, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(edtCLI_EMAIL, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(edtCLI_CELULAR, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblVALIDACAO_CELULAR))
+                            .addComponent(edtCLI_EMAIL, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(edtCLI_FONE2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(493, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -634,15 +654,17 @@ public class ClienteView extends IMenu {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCLI_FONE1)
-                    .addComponent(textCLI_FONE1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(lblVALIDACAO_TELEFONE1)
+                    .addComponent(edtCLI_FONE1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCLI_FONE2)
-                    .addComponent(textCLI_FONE2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edtCLI_FONE2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textCLI_CELULAR, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCLI_CELULAR))
+                    .addComponent(lblCLI_CELULAR)
+                    .addComponent(lblVALIDACAO_CELULAR)
+                    .addComponent(edtCLI_CELULAR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCLI_EMAIL)
@@ -784,18 +806,18 @@ public class ClienteView extends IMenu {
         edtCLI_CODIGO.setText("0");
         edtPES_CODIGO.setText("0");
         edtCLI_NOME.setText("");
-        textCLI_CPF.setText("");
-        textCLI_RG.setText("");
-        textCLI_CADASTRO.setText("");
+        edtCLI_CPF.setText("");
+        edtCLI_RG.setText("");
+        edtCLI_CADASTRO.setText("");
         edtCLI_ENDERECO.setText("");
         edtCLI_NUMERO.setText("");
         edtCLI_COMPLEMENTO.setText("");
         edtCLI_BAIRRO.setText("");
         edtCLI_CIDADE.setText("");
-        textCLI_CEP.setText("");
-        textCLI_FONE1.setText("");
-        textCLI_FONE2.setText("");
-        textCLI_CELULAR.setText("");
+        edtCLI_CEP.setText("");
+        edtCLI_FONE1.setText("");
+        edtCLI_FONE2.setText("");
+        edtCLI_CELULAR.setText("");
         edtCLI_EMAIL.setText("");
         edtCLI_LIMITECRED.setText("");
     }
@@ -806,19 +828,19 @@ public class ClienteView extends IMenu {
         edtPES_CODIGO.setText(String.valueOf(cliente.getPessoamodel().getPES_CODIGO()));
         edtCLI_NOME.setText(cliente.getPessoamodel().getPES_NOME());
         comboCLI_FISICA.setSelectedItem(cliente.getPessoamodel().getPES_FISICA());
-        textCLI_CPF.setText(cliente.getPessoamodel().getPES_CPFCNPJ());
-        textCLI_RG.setText(cliente.getPessoamodel().getPES_RGIE());
-        textCLI_CADASTRO.setText(cliente.getPessoamodel().getPES_CADASTRO());
+        edtCLI_CPF.setText(cliente.getPessoamodel().getPES_CPFCNPJ());
+        edtCLI_RG.setText(cliente.getPessoamodel().getPES_RGIE());
+        edtCLI_CADASTRO.setText(cliente.getPessoamodel().getPES_CADASTRO());
         edtCLI_ENDERECO.setText(cliente.getPessoamodel().getPES_ENDERECO());
         edtCLI_NUMERO.setText(cliente.getPessoamodel().getPES_NUMERO());
         edtCLI_COMPLEMENTO.setText(cliente.getPessoamodel().getPES_COMPLEMENTO());
         edtCLI_BAIRRO.setText(cliente.getPessoamodel().getPES_BAIRRO());
         edtCLI_CIDADE.setText(cliente.getPessoamodel().getPES_CIDADE());
         comboCLI_UF.setSelectedItem(cliente.getPessoamodel().getPES_UF());
-        textCLI_CEP.setText(cliente.getPessoamodel().getPES_CEP());
-        textCLI_FONE1.setText(cliente.getPessoamodel().getPES_FONE1());
-        textCLI_FONE2.setText(cliente.getPessoamodel().getPES_FONE2());
-        textCLI_CELULAR.setText(cliente.getPessoamodel().getPES_CELULAR());
+        edtCLI_CEP.setText(cliente.getPessoamodel().getPES_CEP());
+        edtCLI_FONE1.setText(cliente.getPessoamodel().getPES_FONE1());
+        edtCLI_FONE2.setText(cliente.getPessoamodel().getPES_FONE2());
+        edtCLI_CELULAR.setText(cliente.getPessoamodel().getPES_CELULAR());
         edtCLI_EMAIL.setText(cliente.getPessoamodel().getPES_EMAIL());
         comboCLI_ATIVO.setSelectedItem(cliente.getPessoamodel().getPES_ATIVO());
         edtCLI_LIMITECRED.setText(String.valueOf(cliente.getCLI_LIMITECRED()));
@@ -855,6 +877,58 @@ public class ClienteView extends IMenu {
         }); */
     }
 
+    private boolean validacao() {
+        String erroMessage = "Campos com * devem ser preenchidos!";
+
+        if (edtCLI_NOME.getText() == null || edtCLI_NOME.getText().length() == 0) {
+            lblVALIDACAO_NOME.setForeground(Color.RED);
+        } else {
+            lblVALIDACAO_NOME.setForeground(Color.BLACK);
+        }
+
+        if (edtCLI_CPF.getText() == null || edtCLI_CPF.getText().length() == 0) {
+            lblVALIDACAO_CPF.setForeground(Color.RED);
+        } else {
+            lblVALIDACAO_CPF.setForeground(Color.BLACK);
+        }
+
+        if (edtCLI_RG.getText() == null || edtCLI_RG.getText().length() == 0) {
+            lblVALIDACAO_RG.setForeground(Color.RED);
+        } else {
+            lblVALIDACAO_RG.setForeground(Color.BLACK);
+        }
+
+        if (edtCLI_CADASTRO.getText() == null || edtCLI_CADASTRO.getText().length() == 0) {
+            lblVALIDACAO_CADASTRO.setForeground(Color.RED);
+        } else {
+            lblVALIDACAO_CADASTRO.setForeground(Color.BLACK);
+        }
+
+        if (edtCLI_LIMITECRED.getText() == null || edtCLI_LIMITECRED.getText().length() == 0) {
+            lblVALIDACAO_LIMITECRED.setForeground(Color.RED);
+        } else {
+            lblVALIDACAO_LIMITECRED.setForeground(Color.BLACK);
+        }
+
+        if (edtCLI_FONE1.getText() == null || edtCLI_FONE1.getText().length() == 0) {
+            lblVALIDACAO_TELEFONE1.setForeground(Color.RED);
+        } else {
+            lblVALIDACAO_TELEFONE1.setForeground(Color.BLACK);
+        }
+
+        if (edtCLI_CELULAR.getText() == null || edtCLI_CELULAR.getText().length() == 0) {
+            lblVALIDACAO_CELULAR.setForeground(Color.RED);
+        } else {
+            lblVALIDACAO_CELULAR.setForeground(Color.BLACK);
+        }
+
+        if (erroMessage.length() == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private String filtroConsulta() {
         String condicao = "";
         if (!edtCONS_ID1.getText().trim().equals("")) {
@@ -872,7 +946,7 @@ public class ClienteView extends IMenu {
             }
             condicao += "(PES_NOME LIKE ('%" + edtCONS_NOME.getText() + "%'))";
         }
-        
+
         return condicao;
     }
 
@@ -905,49 +979,55 @@ public class ClienteView extends IMenu {
     private void btnINCLUIRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnINCLUIRActionPerformed
         limpar();
         setOperacao("incluir");
-        edtCLI_NOME.setFocusable(true);
+        edtCLI_CADASTRO.setFocusable(true);
     }//GEN-LAST:event_btnINCLUIRActionPerformed
-
+     
+   
     private void btnGRAVARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGRAVARActionPerformed
+       
         if (JOptionPane.showConfirmDialog(null, "Confirma Gravação deste Cliente?",
                 "Confirmação", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             try {
+                
+                 this.validacao();
                 PessoaModel objpessoa = new PessoaModel();
                 ClienteModel objcliente = new ClienteModel();
-                
+
                 objpessoa.setPES_CODIGO(Integer.parseInt(edtPES_CODIGO.getText()));
                 objpessoa.setPES_NOME(edtCLI_NOME.getText());
                 objpessoa.setPES_FISICA(comboCLI_FISICA.getSelectedItem().toString());
-                objpessoa.setPES_CPFCNPJ(textCLI_CPF.getText());
-                objpessoa.setPES_RGIE(textCLI_RG.getText());
-                objpessoa.setPES_CADASTRO(textCLI_CADASTRO.getText());
+                objpessoa.setPES_CPFCNPJ(edtCLI_CPF.getText());
+                objpessoa.setPES_RGIE(edtCLI_RG.getText());
+                objpessoa.setPES_CADASTRO(edtCLI_CADASTRO.getText());
                 objpessoa.setPES_ENDERECO(edtCLI_ENDERECO.getText());
                 objpessoa.setPES_NUMERO(edtCLI_NUMERO.getText());
                 objpessoa.setPES_COMPLEMENTO(edtCLI_COMPLEMENTO.getText());
                 objpessoa.setPES_BAIRRO(edtCLI_BAIRRO.getText());
                 objpessoa.setPES_CIDADE(edtCLI_CIDADE.getText());
                 objpessoa.setPES_UF(comboCLI_UF.getSelectedItem().toString());
-                objpessoa.setPES_CEP(textCLI_CEP.getText());
-                objpessoa.setPES_FONE1(textCLI_FONE1.getText());
-                objpessoa.setPES_FONE2(textCLI_FONE2.getText());
-                objpessoa.setPES_CELULAR(textCLI_CELULAR.getText());
+                objpessoa.setPES_CEP(edtCLI_CEP.getText());
+                objpessoa.setPES_FONE1(edtCLI_FONE1.getText());
+                objpessoa.setPES_FONE2(edtCLI_FONE2.getText());
+                objpessoa.setPES_CELULAR(edtCLI_CELULAR.getText());
                 objpessoa.setPES_EMAIL(edtCLI_EMAIL.getText());
                 objpessoa.setPES_ATIVO(comboCLI_ATIVO.getSelectedItem().toString());
-                
+
                 objcliente.setPessoamodel(objpessoa);
                 objcliente.setCLI_CODIGO(Integer.parseInt(edtCLI_CODIGO.getText()));
                 objcliente.setCLI_LIMITECRED(Double.parseDouble(edtCLI_LIMITECRED.getText()));
 
-                 PessoaController pessoacontroller = new PessoaController();
+                PessoaController pessoacontroller = new PessoaController();
                 pessoacontroller.gravar(getOperacao(), objpessoa);
-                
+
                 ClienteController clientecontroller = new ClienteController();
                 clientecontroller.gravar(getOperacao(), objcliente);
-                 
+
                 JOptionPane.showMessageDialog(null, "Dados Gravados com Sucesso");
                 consultar();
             } catch (HeadlessException | NumberFormatException | SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Erro na Gravação \n" + ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Os campos com * devem ser preenchidos!\n\n "
+                                                                                    + "Erro na Gravação \n" 
+                                                                                      + ex.getMessage());
             }
         }
     }//GEN-LAST:event_btnGRAVARActionPerformed
@@ -1017,19 +1097,19 @@ public class ClienteView extends IMenu {
                 objpessoa.setPES_CODIGO(Integer.parseInt(edtCLI_CODIGO.getText())); // dar um aolhada 
                 objpessoa.setPES_NOME(edtCLI_NOME.getText());
                 objpessoa.setPES_FISICA(comboCLI_FISICA.getSelectedItem().toString());
-                objpessoa.setPES_CPFCNPJ(textCLI_CPF.getText());
-                objpessoa.setPES_RGIE(textCLI_RG.getText());
-                objpessoa.setPES_CADASTRO(textCLI_CADASTRO.getText());
+                objpessoa.setPES_CPFCNPJ(edtCLI_CPF.getText());
+                objpessoa.setPES_RGIE(edtCLI_RG.getText());
+                objpessoa.setPES_CADASTRO(edtCLI_CADASTRO.getText());
                 objpessoa.setPES_ENDERECO(edtCLI_ENDERECO.getText());
                 objpessoa.setPES_NUMERO(edtCLI_NUMERO.getText());
                 objpessoa.setPES_COMPLEMENTO(edtCLI_COMPLEMENTO.getText());
                 objpessoa.setPES_BAIRRO(edtCLI_BAIRRO.getText());
                 objpessoa.setPES_CIDADE(edtCLI_CIDADE.getText());
                 objpessoa.setPES_UF(comboCLI_UF.getSelectedItem().toString());
-                objpessoa.setPES_CEP(textCLI_CEP.getText());
-                objpessoa.setPES_FONE1(textCLI_FONE1.getText());
-                objpessoa.setPES_FONE2(textCLI_FONE2.getText());
-                objpessoa.setPES_CELULAR(textCLI_CELULAR.getText());
+                objpessoa.setPES_CEP(edtCLI_CEP.getText());
+                objpessoa.setPES_FONE1(edtCLI_FONE1.getText());
+                objpessoa.setPES_FONE2(edtCLI_FONE2.getText());
+                objpessoa.setPES_CELULAR(edtCLI_CELULAR.getText());
                 objpessoa.setPES_EMAIL(edtCLI_EMAIL.getText());
                 objpessoa.setPES_ATIVO(comboCLI_ATIVO.getSelectedItem().toString());
 
@@ -1049,41 +1129,117 @@ public class ClienteView extends IMenu {
         }
     }//GEN-LAST:event_btnEXCLUIRActionPerformed
 
-    private void edtCLI_NOMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtCLI_NOMEActionPerformed
+    private void edtCLI_CPFKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtCLI_CPFKeyReleased
+        String campo = edtCLI_CPF.getText();
+        if (campo.length() == 11) {
+            String cpf;
+            cpf = String.valueOf("" + campo.charAt(0) + campo.charAt(1) + campo.charAt(2) + "." + campo.charAt(3) + campo.charAt(4) + campo.charAt(5) + "." + campo.charAt(6) + campo.charAt(7) + campo.charAt(8) + "-" + campo.charAt(9) + campo.charAt(10));
+            edtCLI_CPF.setText(cpf);
+        }
+    }//GEN-LAST:event_edtCLI_CPFKeyReleased
 
-    }//GEN-LAST:event_edtCLI_NOMEActionPerformed
+    private void edtCLI_CPFKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtCLI_CPFKeyTyped
+        int quantidade = 11;
+        if (edtCLI_CPF.getText().length() >= quantidade) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_edtCLI_CPFKeyTyped
 
-    private void edtCLI_LIMITECREDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtCLI_LIMITECREDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edtCLI_LIMITECREDActionPerformed
+    private void edtCLI_CADASTROKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtCLI_CADASTROKeyReleased
+        String campo = edtCLI_CADASTRO.getText();
+        if (campo.length() == 8) {
+            String cadastro;
+            cadastro = String.valueOf("" + campo.charAt(0) + campo.charAt(1) + "/" + campo.charAt(2) + campo.charAt(3) + "/" + campo.charAt(4) + campo.charAt(5) + campo.charAt(6) + campo.charAt(7));
+            edtCLI_CADASTRO.setText(cadastro);
+        }
+    }//GEN-LAST:event_edtCLI_CADASTROKeyReleased
 
-    private void edtCLI_ENDERECOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtCLI_ENDERECOActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edtCLI_ENDERECOActionPerformed
+    private void edtCLI_CADASTROKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtCLI_CADASTROKeyTyped
+        int quantidade = 8;
+        if (edtCLI_CADASTRO.getText().length() >= quantidade) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_edtCLI_CADASTROKeyTyped
 
-    private void edtCLI_NUMEROActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtCLI_NUMEROActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edtCLI_NUMEROActionPerformed
+    private void edtCLI_RGKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtCLI_RGKeyReleased
+        String campo = edtCLI_RG.getText();
+        if (campo.length() == 9) {
+            String rg;
+            rg = String.valueOf("" + campo.charAt(0) + campo.charAt(1) + "." + campo.charAt(2) + campo.charAt(3) + campo.charAt(4) + "." + campo.charAt(5) + campo.charAt(6) + campo.charAt(7) + "-" + campo.charAt(8));
+            edtCLI_RG.setText(rg);
+        }
+    }//GEN-LAST:event_edtCLI_RGKeyReleased
 
-    private void edtCLI_COMPLEMENTOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtCLI_COMPLEMENTOActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edtCLI_COMPLEMENTOActionPerformed
+    private void edtCLI_RGKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtCLI_RGKeyTyped
+        int quantidade = 9;
+        if (edtCLI_RG.getText().length() >= quantidade) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_edtCLI_RGKeyTyped
 
-    private void edtCLI_BAIRROActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtCLI_BAIRROActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edtCLI_BAIRROActionPerformed
+    private void edtCLI_CEPKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtCLI_CEPKeyReleased
+        String campo = edtCLI_CEP.getText();
+        if (campo.length() == 8) {
+            String cep;
+            cep = String.valueOf("" + campo.charAt(0) + campo.charAt(1) + campo.charAt(2) + campo.charAt(3) + campo.charAt(4) + "-" + campo.charAt(5) + campo.charAt(6) + campo.charAt(7));
+            edtCLI_CEP.setText(cep);
+        }
+    }//GEN-LAST:event_edtCLI_CEPKeyReleased
 
-    private void edtCLI_CIDADEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtCLI_CIDADEActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edtCLI_CIDADEActionPerformed
+    private void edtCLI_CEPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtCLI_CEPKeyTyped
+        int quantidade = 8;
+        if (edtCLI_CEP.getText().length() >= quantidade) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_edtCLI_CEPKeyTyped
 
-    private void edtCLI_EMAILActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtCLI_EMAILActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edtCLI_EMAILActionPerformed
+    private void edtCLI_FONE1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtCLI_FONE1KeyTyped
+        int quantidade = 10;
+        if (edtCLI_FONE1.getText().length() >= quantidade) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_edtCLI_FONE1KeyTyped
 
-    private void edtPES_CODIGOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtPES_CODIGOActionPerformed
+    private void edtCLI_FONE1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtCLI_FONE1KeyReleased
+        String campo = edtCLI_FONE1.getText();
+        if (campo.length() == 10) {
+            String fone1;
+            fone1 = String.valueOf("" + "(" + campo.charAt(0) + campo.charAt(1) + ")" + campo.charAt(2) + campo.charAt(3) + campo.charAt(4) + campo.charAt(5) + "-" + campo.charAt(6) + campo.charAt(7) + campo.charAt(8) + campo.charAt(9));
+            edtCLI_FONE1.setText(fone1);
+        }
+    }//GEN-LAST:event_edtCLI_FONE1KeyReleased
 
-    }//GEN-LAST:event_edtPES_CODIGOActionPerformed
+    private void edtCLI_FONE2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtCLI_FONE2KeyReleased
+        String campo = edtCLI_FONE2.getText();
+        if (campo.length() == 10) {
+            String fone2;
+            fone2 = String.valueOf("" + "(" + campo.charAt(0) + campo.charAt(1) + ")" + campo.charAt(2) + campo.charAt(3) + campo.charAt(4) + campo.charAt(5) + "-" + campo.charAt(6) + campo.charAt(7) + campo.charAt(8) + campo.charAt(9));
+            edtCLI_FONE2.setText(fone2);
+        }
+    }//GEN-LAST:event_edtCLI_FONE2KeyReleased
+
+    private void edtCLI_FONE2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtCLI_FONE2KeyTyped
+        int quantidade = 10;
+        if (edtCLI_FONE2.getText().length() >= quantidade) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_edtCLI_FONE2KeyTyped
+
+    private void edtCLI_CELULARKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtCLI_CELULARKeyReleased
+        String campo = edtCLI_CELULAR.getText();
+        if (campo.length() == 10) {
+            String fone2;
+            fone2 = String.valueOf("" + "(" + campo.charAt(0) + campo.charAt(1) + ")" + campo.charAt(2) + campo.charAt(3) + campo.charAt(4) + campo.charAt(5) + "-" + campo.charAt(6) + campo.charAt(7) + campo.charAt(8) + campo.charAt(9));
+            edtCLI_CELULAR.setText(fone2);
+        }
+    }//GEN-LAST:event_edtCLI_CELULARKeyReleased
+
+    private void edtCLI_CELULARKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtCLI_CELULARKeyTyped
+        int quantidade = 10;
+        if (edtCLI_CELULAR.getText().length() >= quantidade) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_edtCLI_CELULARKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1102,14 +1258,21 @@ public class ClienteView extends IMenu {
     private javax.swing.JComboBox<String> comboCLI_FISICA;
     private javax.swing.JComboBox<String> comboCLI_UF;
     private javax.swing.JTextField edtCLI_BAIRRO;
+    private javax.swing.JTextField edtCLI_CADASTRO;
+    private javax.swing.JTextField edtCLI_CELULAR;
+    private javax.swing.JTextField edtCLI_CEP;
     private javax.swing.JTextField edtCLI_CIDADE;
     private javax.swing.JTextField edtCLI_CODIGO;
     private javax.swing.JTextField edtCLI_COMPLEMENTO;
+    private javax.swing.JTextField edtCLI_CPF;
     private javax.swing.JTextField edtCLI_EMAIL;
     private javax.swing.JTextField edtCLI_ENDERECO;
+    private javax.swing.JTextField edtCLI_FONE1;
+    private javax.swing.JTextField edtCLI_FONE2;
     private javax.swing.JTextField edtCLI_LIMITECRED;
     private javax.swing.JTextField edtCLI_NOME;
     private javax.swing.JTextField edtCLI_NUMERO;
+    private javax.swing.JTextField edtCLI_RG;
     private javax.swing.JTextField edtCONS_ID1;
     private javax.swing.JTextField edtCONS_ID2;
     private javax.swing.JTextField edtCONS_NOME;
@@ -1149,15 +1312,15 @@ public class ClienteView extends IMenu {
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JLabel lblUSU_ATIVO;
     private javax.swing.JLabel lblUSU_CADASTRO;
+    private javax.swing.JLabel lblVALIDACAO_CADASTRO;
+    private javax.swing.JLabel lblVALIDACAO_CELULAR;
+    private javax.swing.JLabel lblVALIDACAO_CPF;
+    private javax.swing.JLabel lblVALIDACAO_LIMITECRED;
+    private javax.swing.JLabel lblVALIDACAO_NOME;
+    private javax.swing.JLabel lblVALIDACAO_RG;
+    private javax.swing.JLabel lblVALIDACAO_TELEFONE1;
     private javax.swing.JPanel painelCONSULTA;
     private javax.swing.JPanel painelDADOS;
     private javax.swing.JTable tblConsulta;
-    private javax.swing.JFormattedTextField textCLI_CADASTRO;
-    private javax.swing.JFormattedTextField textCLI_CELULAR;
-    private javax.swing.JFormattedTextField textCLI_CEP;
-    private javax.swing.JFormattedTextField textCLI_CPF;
-    private javax.swing.JFormattedTextField textCLI_FONE1;
-    private javax.swing.JFormattedTextField textCLI_FONE2;
-    private javax.swing.JFormattedTextField textCLI_RG;
     // End of variables declaration//GEN-END:variables
 }

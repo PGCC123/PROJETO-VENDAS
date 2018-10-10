@@ -25,7 +25,7 @@ public class FormaPagamentoView extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setLayout(null);
         this.populaJCombobox();
-        
+
         edtVDP_CODIGO.setVisible(false);
         edtVDA_CODIGO.setVisible(false);
     }
@@ -56,7 +56,7 @@ public class FormaPagamentoView extends javax.swing.JFrame {
                         vendadao = new VendaDao();
                         edtVDA_CODIGO.setText(String.valueOf(vendadao.ultimaVenda()));
                     } catch (SQLException erro) {
-                        JOptionPane.showMessageDialog(null, "Não foi possivel adicionar o código da venda!" + erro.getMessage());  
+                        JOptionPane.showMessageDialog(null, "Não foi possivel adicionar o código da venda!" + erro.getMessage());
                     }
                 } else if (comboFPG_NOME.getSelectedItem().equals("Selecionar")) {
                     edtFPG_CODIGO.setText(null);
@@ -231,7 +231,6 @@ public class FormaPagamentoView extends javax.swing.JFrame {
                 objvendapagto.setVDP_VALOR(Double.parseDouble(edtVDP_VALOR.getText()));
                 objvenda.setVDA_CODIGO(Integer.parseInt(edtVDA_CODIGO.getText()));
                 objpagamento.setFPG_CODIGO(Integer.parseInt(edtFPG_CODIGO.getText()));
-                
 
                 objvendapagto.setVDA_MODEL(objvenda);
                 objvendapagto.setFPG_MODEL(objpagamento);
@@ -240,8 +239,15 @@ public class FormaPagamentoView extends javax.swing.JFrame {
                 vendapgatocontroller.adicionar(objvendapagto);
 
                 JOptionPane.showMessageDialog(null, "Pagamento efetuado com sucesso!");
+
                 this.dispose();
                 
+               /* edtFPG_CODIGO.setText("");
+                comboFPG_NOME.setSelectedItem("Selecionar");
+                edtVDP_CODIGO.setText("");
+                edtVDA_CODIGO.setText("");
+                edtVDP_VALOR.setText("");*/
+
             } catch (HeadlessException | NumberFormatException | SQLException erro) {
                 JOptionPane.showMessageDialog(null, "Erro ao efetuar o pagamento" + erro.getMessage());
             }

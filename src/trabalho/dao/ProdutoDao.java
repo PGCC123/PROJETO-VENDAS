@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import trabalho.model.ProdutoModel;
 
 public class ProdutoDao {
@@ -31,7 +32,7 @@ public class ProdutoDao {
         stm.setDouble(9, produto.getPRO_MAX());
         stm.setDouble(10, produto.getPRO_EMBALAGEM());
         stm.setDouble(11, produto.getPRO_PESO());
-        stm.setString(12, produto.getPRO_CADASTRO());
+        stm.setString(12, produto.getPRO_CADASTRO()); stm.setDate(12, new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
         stm.setString(13, produto.getPRO_OBS());
         stm.setString(14, produto.getPRO_ATIVO());
         stm.execute();
