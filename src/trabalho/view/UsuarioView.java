@@ -1,5 +1,6 @@
 package trabalho.view;
 
+import java.awt.Color;
 import trabalho.controller.UsuarioController;
 import java.awt.Dimension;
 import java.sql.SQLException;
@@ -501,7 +502,6 @@ public class UsuarioView extends JFrame {
         edtUSU_LOGIN.setText("");
         edtUSU_SENHA.setText("");
         textUSU_CADASTRO.setText("");
-  
     }
 
     private void mostrar(UsuarioModel usuario) {
@@ -509,8 +509,8 @@ public class UsuarioView extends JFrame {
         edtUSU_NOME.setText(usuario.getUSU_NOME());
         edtUSU_LOGIN.setText(usuario.getUSU_LOGIN());
         edtUSU_SENHA.setText(usuario.getUSU_SENHA());
-         textUSU_CADASTRO.setText(usuario.getUSU_CADASTRO());
-         comboUSU_ATIVO.setSelectedItem(usuario.getUSU_ATIVO());
+        textUSU_CADASTRO.setText(usuario.getUSU_CADASTRO());
+        comboUSU_ATIVO.setSelectedItem(usuario.getUSU_ATIVO());
     }
 
     private String filtroConsulta() {
@@ -556,7 +556,6 @@ public class UsuarioView extends JFrame {
             JOptionPane.showMessageDialog(null, "Erro na Consulta do Usuário \n" + ex.getMessage());
         }
     }
-
     private void btnPRIMEIROActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPRIMEIROActionPerformed
         if (lista.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Não Existem Usuários Cadastrados !");
@@ -577,14 +576,14 @@ public class UsuarioView extends JFrame {
                 "Confirmação", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             try {
                 UsuarioModel objusuario = new UsuarioModel();
-                
+
                 objusuario.setUSU_CODIGO(Integer.parseInt(edtUSU_CODIGO.getText()));
                 objusuario.setUSU_NOME(edtUSU_NOME.getText());
                 objusuario.setUSU_LOGIN(edtUSU_LOGIN.getText());
                 objusuario.setUSU_SENHA(edtUSU_SENHA.getText());
                 objusuario.setUSU_CADASTRO(textUSU_CADASTRO.getText());
-                objusuario.setUSU_ATIVO(comboUSU_ATIVO.getSelectedItem().toString()); 
-              
+                objusuario.setUSU_ATIVO(comboUSU_ATIVO.getSelectedItem().toString());
+
                 UsuarioController usuariocontroller = new UsuarioController();
                 usuariocontroller.gravar(getOperacao(), objusuario);
 
@@ -606,8 +605,8 @@ public class UsuarioView extends JFrame {
 
     private void btnSAIRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSAIRActionPerformed
         int sair = JOptionPane.showConfirmDialog(null, "Deseja realizar log off?", "Aviso", JOptionPane.YES_NO_OPTION);
-            if ( sair == JOptionPane.YES_NO_OPTION) {
-           
+        if (sair == JOptionPane.YES_NO_OPTION) {
+
             Conexao objconexao;
             objconexao = new Conexao();
 
@@ -615,9 +614,9 @@ public class UsuarioView extends JFrame {
             LoginView loginview;
             loginview = new LoginView();
             loginview.setVisible(true);
-            
+
         } else {
-         
+
         }
     }//GEN-LAST:event_btnSAIRActionPerformed
 
@@ -630,7 +629,7 @@ public class UsuarioView extends JFrame {
         if (registro >= 0 && registro < lista.size()) {
             // exibe os dados do registro na aba Dados
             mostrar(lista.get(registro));
-            
+
             // posicionar o registro selecionado na tabela (JTable)
             tblConsulta.changeSelection(registro, 0, false, false);
         }
@@ -664,7 +663,7 @@ public class UsuarioView extends JFrame {
                 objusuario.setUSU_LOGIN(edtUSU_LOGIN.getText());
                 objusuario.setUSU_SENHA(edtUSU_SENHA.getText());
                 objusuario.setUSU_ATIVO(comboUSU_ATIVO.getSelectedItem().toString());
-    
+
                 UsuarioController usuariocontroller = new UsuarioController();
                 usuariocontroller.excluir(objusuario);
 
@@ -679,7 +678,7 @@ public class UsuarioView extends JFrame {
     private void edtUSU_NOMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtUSU_NOMEActionPerformed
 
     }//GEN-LAST:event_edtUSU_NOMEActionPerformed
-  
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnALTERAR;
     private javax.swing.JButton btnANTERIOR;

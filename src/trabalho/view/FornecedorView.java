@@ -1,10 +1,17 @@
 package trabalho.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import trabalho.conexao.Conexao;
@@ -91,16 +98,21 @@ public class FornecedorView extends IMenu {
         lblFOR_ATIVO = new javax.swing.JLabel();
         comboFOR_ATIVO = new javax.swing.JComboBox<>();
         lblFOR_CADASTRO = new javax.swing.JLabel();
-        edtFOR_CNPJ = new javax.swing.JFormattedTextField();
         lblFOR_FISICA = new javax.swing.JLabel();
         comboFOR_FISICA = new javax.swing.JComboBox<>();
         lblFOR_CNPJ = new javax.swing.JLabel();
-        edtFOR_CADASTRO = new javax.swing.JFormattedTextField();
         lblCLI_IE = new javax.swing.JLabel();
-        edtFOR_IE = new javax.swing.JFormattedTextField();
         lblFOR_FANTASIA = new javax.swing.JLabel();
         edtFOR_FANTASIA = new javax.swing.JTextField();
         edtFOR_CODIGO = new javax.swing.JTextField();
+        edtFOR_CPFCNPJ = new javax.swing.JTextField();
+        lblVALIDACAO_CNPJ = new javax.swing.JLabel();
+        lblVALIDACAO_FANTASIA = new javax.swing.JLabel();
+        lblVALIDACAO_NOME = new javax.swing.JLabel();
+        edtFOR_CADASTRO = new javax.swing.JTextField();
+        lblVALIDACAO_IE = new javax.swing.JLabel();
+        edtFOR_IE = new javax.swing.JTextField();
+        lblVALIDACAO_CADASTRO = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         lblFOR_ENDERECO = new javax.swing.JLabel();
         edtFOR_ENDERECO = new javax.swing.JTextField();
@@ -119,16 +131,19 @@ public class FornecedorView extends IMenu {
         jPanel2 = new javax.swing.JPanel();
         lblFORI_FONE1 = new javax.swing.JLabel();
         lblFOR_FONE2 = new javax.swing.JLabel();
-        edtFOR_FONE1 = new javax.swing.JFormattedTextField();
-        edtFOR_FONE2 = new javax.swing.JFormattedTextField();
         lblFOR_CELULAR = new javax.swing.JLabel();
-        edtFOR_CELULAR = new javax.swing.JFormattedTextField();
         lblFOR_EMAIL = new javax.swing.JLabel();
         edtFOR_EMAIL = new javax.swing.JTextField();
         lblFOR_SITE = new javax.swing.JLabel();
         edtFOR_SITE = new javax.swing.JTextField();
         lblFOR_CONTATO = new javax.swing.JLabel();
         edtFOR_CONTATO = new javax.swing.JTextField();
+        edtFOR_FONE2 = new javax.swing.JTextField();
+        edtFOR_FONE1 = new javax.swing.JTextField();
+        edtFOR_CELULAR = new javax.swing.JTextField();
+        lblVALIDACAO_FONE1 = new javax.swing.JLabel();
+        lblVALIDACAO_CELULAR = new javax.swing.JLabel();
+        lblVALIDACAO_CONTATO = new javax.swing.JLabel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         painelCONSULTA = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -144,6 +159,10 @@ public class FornecedorView extends IMenu {
         edtCONS_LOGIN = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblConsulta = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        lblDATA = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lblHORA = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -162,6 +181,11 @@ public class FornecedorView extends IMenu {
         setTitle("Sistema Vendas");
         setFocusable(false);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
         getContentPane().setLayout(null);
 
         jToolBar1.setRollover(true);
@@ -301,11 +325,6 @@ public class FornecedorView extends IMenu {
         edtPES_CODIGO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         edtFOR_NOME.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        edtFOR_NOME.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtFOR_NOMEActionPerformed(evt);
-            }
-        });
 
         lblFOR_ATIVO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblFOR_ATIVO.setText("Ativo? ");
@@ -314,14 +333,7 @@ public class FornecedorView extends IMenu {
         comboFOR_ATIVO.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ATIVO", "INATIVO" }));
 
         lblFOR_CADASTRO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblFOR_CADASTRO.setText("Cadastro");
-
-        try {
-            edtFOR_CNPJ.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        edtFOR_CNPJ.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblFOR_CADASTRO.setText("Data");
 
         lblFOR_FISICA.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblFOR_FISICA.setText("Física?");
@@ -332,35 +344,56 @@ public class FornecedorView extends IMenu {
         lblFOR_CNPJ.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblFOR_CNPJ.setText("CNPJ");
 
-        try {
-            edtFOR_CADASTRO.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        edtFOR_CADASTRO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
         lblCLI_IE.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCLI_IE.setText("Inscrição Estadual");
-
-        try {
-            edtFOR_IE.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        edtFOR_IE.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         lblFOR_FANTASIA.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblFOR_FANTASIA.setText("Fantasia");
 
         edtFOR_FANTASIA.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        edtFOR_FANTASIA.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtFOR_FANTASIAActionPerformed(evt);
-            }
-        });
 
         edtFOR_CODIGO.setEditable(false);
         edtFOR_CODIGO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        edtFOR_CPFCNPJ.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        edtFOR_CPFCNPJ.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                edtFOR_CPFCNPJKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                edtFOR_CPFCNPJKeyTyped(evt);
+            }
+        });
+
+        lblVALIDACAO_CNPJ.setText("*");
+
+        lblVALIDACAO_FANTASIA.setText("*");
+
+        lblVALIDACAO_NOME.setText("*");
+
+        edtFOR_CADASTRO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        edtFOR_CADASTRO.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                edtFOR_CADASTROKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                edtFOR_CADASTROKeyTyped(evt);
+            }
+        });
+
+        lblVALIDACAO_IE.setText("*");
+
+        edtFOR_IE.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        edtFOR_IE.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                edtFOR_IEKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                edtFOR_IEKeyTyped(evt);
+            }
+        });
+
+        lblVALIDACAO_CADASTRO.setText("*");
 
         javax.swing.GroupLayout painelDADOSLayout = new javax.swing.GroupLayout(painelDADOS);
         painelDADOS.setLayout(painelDADOSLayout);
@@ -381,20 +414,34 @@ public class FornecedorView extends IMenu {
                             .addGroup(painelDADOSLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(lblCLI_IE)))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                         .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(edtFOR_NOME, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(edtFOR_FANTASIA, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(edtFOR_CNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(edtFOR_IE, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(painelDADOSLayout.createSequentialGroup()
+                                .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(edtFOR_FANTASIA, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(edtFOR_NOME, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelDADOSLayout.createSequentialGroup()
+                                            .addComponent(edtFOR_IE, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(lblVALIDACAO_IE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelDADOSLayout.createSequentialGroup()
+                                            .addComponent(edtFOR_CPFCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(26, 26, 26)
+                                            .addComponent(lblVALIDACAO_CNPJ))))
+                                .addGap(18, 18, Short.MAX_VALUE)
+                                .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblVALIDACAO_NOME)
+                                    .addComponent(lblVALIDACAO_FANTASIA)))
                             .addGroup(painelDADOSLayout.createSequentialGroup()
                                 .addComponent(edtFOR_CODIGO, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(edtPES_CODIGO, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(edtPES_CODIGO, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(painelDADOSLayout.createSequentialGroup()
                         .addGap(67, 67, 67)
                         .addComponent(lblFOR_FANTASIA)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblFOR_ATIVO, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblFOR_FISICA, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -402,9 +449,12 @@ public class FornecedorView extends IMenu {
                 .addGap(18, 18, 18)
                 .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(comboFOR_ATIVO, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(edtFOR_CADASTRO, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboFOR_FISICA, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(201, 201, 201))
+                    .addComponent(comboFOR_FISICA, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(painelDADOSLayout.createSequentialGroup()
+                        .addComponent(edtFOR_CADASTRO, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblVALIDACAO_CADASTRO)))
+                .addGap(177, 177, 177))
         );
         painelDADOSLayout.setVerticalGroup(
             painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -420,9 +470,11 @@ public class FornecedorView extends IMenu {
                             .addComponent(lblFOR_ATIVO, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(comboFOR_ATIVO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(edtFOR_CADASTRO, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblFOR_CADASTRO)))
+                        .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblFOR_CADASTRO)
+                            .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(edtFOR_CADASTRO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblVALIDACAO_CADASTRO))))
                     .addGroup(painelDADOSLayout.createSequentialGroup()
                         .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblFOR_CODIGO)
@@ -431,19 +483,23 @@ public class FornecedorView extends IMenu {
                         .addGap(18, 18, 18)
                         .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblFOR_NOME)
-                            .addComponent(edtFOR_NOME, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(edtFOR_NOME, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblVALIDACAO_NOME))
                         .addGap(18, 18, 18)
                         .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(edtFOR_FANTASIA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblFOR_FANTASIA))
+                            .addComponent(lblFOR_FANTASIA)
+                            .addComponent(lblVALIDACAO_FANTASIA))
                         .addGap(23, 23, 23)
                         .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(edtFOR_CNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblFOR_CNPJ))
-                        .addGap(22, 22, 22)
+                            .addComponent(lblFOR_CNPJ)
+                            .addComponent(edtFOR_CPFCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblVALIDACAO_CNPJ))
+                        .addGap(21, 21, 21)
                         .addGroup(painelDADOSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblCLI_IE)
-                            .addComponent(edtFOR_IE, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(lblVALIDACAO_IE)
+                            .addComponent(edtFOR_IE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
 
         jTabbedPane1.addTab("Dados Pessoais", painelDADOS);
@@ -452,51 +508,26 @@ public class FornecedorView extends IMenu {
         lblFOR_ENDERECO.setText("Endereço");
 
         edtFOR_ENDERECO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        edtFOR_ENDERECO.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtFOR_ENDERECOActionPerformed(evt);
-            }
-        });
 
         lblFOR_NUMERO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblFOR_NUMERO.setText("N°");
 
         edtFOR_NUMERO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        edtFOR_NUMERO.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtFOR_NUMEROActionPerformed(evt);
-            }
-        });
 
         lblFOR_COMPLEMENTO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblFOR_COMPLEMENTO.setText("Complemento");
 
         edtFOR_COMPLEMENTO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        edtFOR_COMPLEMENTO.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtFOR_COMPLEMENTOActionPerformed(evt);
-            }
-        });
 
         lblFOR_BAIRRO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblFOR_BAIRRO.setText("Bairro");
 
         edtFOR_BAIRRO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        edtFOR_BAIRRO.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtFOR_BAIRROActionPerformed(evt);
-            }
-        });
 
         lblFOR_CIDADE.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblFOR_CIDADE.setText("Cidade");
 
         edtFOR_CIDADE.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        edtFOR_CIDADE.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtFOR_CIDADEActionPerformed(evt);
-            }
-        });
 
         lblFORI_UF.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblFORI_UF.setText("UF");
@@ -588,59 +619,59 @@ public class FornecedorView extends IMenu {
         lblFOR_FONE2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblFOR_FONE2.setText("Telefone 2");
 
-        try {
-            edtFOR_FONE1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        edtFOR_FONE1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        try {
-            edtFOR_FONE2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        edtFOR_FONE2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
         lblFOR_CELULAR.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblFOR_CELULAR.setText("Celular");
-
-        try {
-            edtFOR_CELULAR.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) 9####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        edtFOR_CELULAR.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         lblFOR_EMAIL.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblFOR_EMAIL.setText("E-mail");
 
         edtFOR_EMAIL.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        edtFOR_EMAIL.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtFOR_EMAILActionPerformed(evt);
-            }
-        });
 
         lblFOR_SITE.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblFOR_SITE.setText("Site");
 
         edtFOR_SITE.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        edtFOR_SITE.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtFOR_SITEActionPerformed(evt);
-            }
-        });
 
         lblFOR_CONTATO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblFOR_CONTATO.setText("Contato");
 
         edtFOR_CONTATO.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        edtFOR_CONTATO.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtFOR_CONTATOActionPerformed(evt);
+
+        edtFOR_FONE2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        edtFOR_FONE2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                edtFOR_FONE2KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                edtFOR_FONE2KeyTyped(evt);
             }
         });
+
+        edtFOR_FONE1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        edtFOR_FONE1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                edtFOR_FONE1KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                edtFOR_FONE1KeyTyped(evt);
+            }
+        });
+
+        edtFOR_CELULAR.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        edtFOR_CELULAR.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                edtFOR_CELULARKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                edtFOR_CELULARKeyTyped(evt);
+            }
+        });
+
+        lblVALIDACAO_FONE1.setText("*");
+
+        lblVALIDACAO_CELULAR.setText("*");
+
+        lblVALIDACAO_CONTATO.setText("*");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -650,14 +681,6 @@ public class FornecedorView extends IMenu {
                 .addGap(46, 46, 46)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lblFORI_FONE1)
-                        .addGap(18, 18, 18)
-                        .addComponent(edtFOR_FONE1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(197, 197, 197)
-                        .addComponent(lblFOR_CONTATO)
-                        .addGap(18, 18, 18)
-                        .addComponent(edtFOR_CONTATO, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lblFOR_CELULAR)
                             .addComponent(lblFOR_FONE2)
@@ -665,11 +688,27 @@ public class FornecedorView extends IMenu {
                             .addComponent(lblFOR_SITE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(edtFOR_FONE2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(edtFOR_CELULAR, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(edtFOR_EMAIL, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(edtFOR_SITE, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(228, Short.MAX_VALUE))
+                            .addComponent(edtFOR_SITE, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(edtFOR_CELULAR, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                                .addComponent(edtFOR_FONE2, javax.swing.GroupLayout.Alignment.LEADING))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblVALIDACAO_CELULAR)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(lblFORI_FONE1)
+                                .addGap(18, 18, 18)
+                                .addComponent(edtFOR_FONE1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27)
+                                .addComponent(lblVALIDACAO_FONE1)))
+                        .addGap(136, 136, 136)
+                        .addComponent(lblFOR_CONTATO)
+                        .addGap(18, 18, 18)
+                        .addComponent(edtFOR_CONTATO, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(lblVALIDACAO_CONTATO)))
+                .addContainerGap(224, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -677,22 +716,25 @@ public class FornecedorView extends IMenu {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFORI_FONE1)
-                    .addComponent(edtFOR_FONE1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblFOR_CONTATO)
-                    .addComponent(edtFOR_CONTATO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edtFOR_CONTATO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtFOR_FONE1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblVALIDACAO_FONE1)
+                    .addComponent(lblVALIDACAO_CONTATO))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFOR_FONE2)
-                    .addComponent(edtFOR_FONE2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(edtFOR_FONE2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(edtFOR_CELULAR, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblFOR_CELULAR))
+                    .addComponent(lblFOR_CELULAR)
+                    .addComponent(edtFOR_CELULAR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblVALIDACAO_CELULAR))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFOR_EMAIL)
                     .addComponent(edtFOR_EMAIL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFOR_SITE)
                     .addComponent(edtFOR_SITE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -831,15 +873,33 @@ public class FornecedorView extends IMenu {
         getContentPane().add(jTabbedPane2);
         jTabbedPane2.setBounds(20, 380, 1260, 250);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Data Atual:");
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(1110, 80, 70, 30);
+
+        lblDATA.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        getContentPane().add(lblDATA);
+        lblDATA.setBounds(1190, 80, 100, 30);
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel2.setText("Hora Atual:");
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(1110, 120, 70, 30);
+
+        lblHORA.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        getContentPane().add(lblHORA);
+        lblHORA.setBounds(1190, 120, 100, 30);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void limpar() {
-         edtFOR_CODIGO.setText("0");
+        edtFOR_CODIGO.setText("0");
         edtPES_CODIGO.setText("0");
         edtFOR_NOME.setText("");
         edtFOR_FANTASIA.setText("");
-        edtFOR_CNPJ.setText("");
+        edtFOR_CPFCNPJ.setText("");
         edtFOR_IE.setText("");
         edtFOR_CADASTRO.setText("");
         edtFOR_ENDERECO.setText("");
@@ -848,13 +908,13 @@ public class FornecedorView extends IMenu {
         edtFOR_BAIRRO.setText("");
         edtFOR_CIDADE.setText("");
         edtFOR_CEP.setText("");
-        edtFOR_FONE1.setText("");
+        edtFOR_FONE2.setText("");
         edtFOR_FONE2.setText("");
         edtFOR_CELULAR.setText("");
         edtFOR_EMAIL.setText("");
         edtFOR_SITE.setText("");
         edtFOR_CONTATO.setText("");
-   }
+    }
 
     private void mostrar(FornecedorModel fornecedor) {
         edtFOR_CODIGO.setText(String.valueOf(fornecedor.getFOR_CODIGO()));
@@ -862,8 +922,8 @@ public class FornecedorView extends IMenu {
         edtFOR_NOME.setText(fornecedor.getPES_MODEL().getPES_NOME());
         edtFOR_FANTASIA.setText(fornecedor.getPES_MODEL().getPES_FANTASIA());
         comboFOR_FISICA.setSelectedItem(fornecedor.getPES_MODEL().getPES_FISICA());
-        edtFOR_CNPJ.setText(fornecedor.getPES_MODEL().getPES_CPFCNPJ());
-        edtFOR_IE.setText(fornecedor.getPES_MODEL().getPES_RGIE());
+        edtFOR_CPFCNPJ.setText(fornecedor.getPES_MODEL().getPES_CPFCNPJ());
+        edtFOR_CADASTRO.setText(fornecedor.getPES_MODEL().getPES_RGIE());
         edtFOR_CADASTRO.setText(fornecedor.getPES_MODEL().getPES_CADASTRO());
         edtFOR_ENDERECO.setText(fornecedor.getPES_MODEL().getPES_ENDERECO());
         edtFOR_NUMERO.setText(fornecedor.getPES_MODEL().getPES_NUMERO());
@@ -872,7 +932,7 @@ public class FornecedorView extends IMenu {
         edtFOR_CIDADE.setText(fornecedor.getPES_MODEL().getPES_CIDADE());
         comboFOR_UF.setSelectedItem(fornecedor.getPES_MODEL().getPES_UF());
         edtFOR_CEP.setText(fornecedor.getPES_MODEL().getPES_CEP());
-        edtFOR_FONE1.setText(fornecedor.getPES_MODEL().getPES_FONE1());
+        edtFOR_FONE2.setText(fornecedor.getPES_MODEL().getPES_FONE1());
         edtFOR_FONE2.setText(fornecedor.getPES_MODEL().getPES_FONE2());
         edtFOR_CELULAR.setText(fornecedor.getPES_MODEL().getPES_CELULAR());
         edtFOR_SITE.setText(fornecedor.getPES_MODEL().getPES_SITE());
@@ -882,7 +942,7 @@ public class FornecedorView extends IMenu {
 
         //funcionalidade do metodo: é um evento que ao selecionar uma opção no JComboBox de PES_FISICA
         //ele deixará o campo ativo ou inativo, util para cadatro de cliente e fornecedor.
-      /*  comboFOR_FISICA.addItemListener(new ItemListener() {
+        /*  comboFOR_FISICA.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent evento) {
 
@@ -910,6 +970,64 @@ public class FornecedorView extends IMenu {
                 }
             }
         }); */
+    }
+
+    private boolean validacao() {
+        String erroMessage = "Campos com * devem ser preenchidos!";
+
+        if (edtFOR_NOME.getText() == null || edtFOR_NOME.getText().length() == 0) {
+            lblVALIDACAO_NOME.setForeground(Color.RED);
+        } else {
+            lblVALIDACAO_NOME.setForeground(Color.BLACK);
+        }
+
+        if (edtFOR_FANTASIA.getText() == null || edtFOR_FANTASIA.getText().length() == 0) {
+            lblVALIDACAO_FANTASIA.setForeground(Color.RED);
+        } else {
+            lblVALIDACAO_FANTASIA.setForeground(Color.BLACK);
+        }
+
+        if (edtFOR_CPFCNPJ.getText() == null || edtFOR_CPFCNPJ.getText().length() == 0) {
+            lblVALIDACAO_CNPJ.setForeground(Color.RED);
+        } else {
+            lblVALIDACAO_CNPJ.setForeground(Color.BLACK);
+        }
+
+        if (edtFOR_IE.getText() == null || edtFOR_IE.getText().length() == 0) {
+            lblVALIDACAO_IE.setForeground(Color.RED);
+        } else {
+            lblVALIDACAO_IE.setForeground(Color.BLACK);
+        }
+
+        if (edtFOR_CADASTRO.getText() == null || edtFOR_CADASTRO.getText().length() == 0) {
+            lblVALIDACAO_CADASTRO.setForeground(Color.RED);
+        } else {
+            lblVALIDACAO_CADASTRO.setForeground(Color.BLACK);
+        }
+
+        if (edtFOR_FONE1.getText() == null || edtFOR_FONE1.getText().length() == 0) {
+            lblVALIDACAO_FONE1.setForeground(Color.RED);
+        } else {
+            lblVALIDACAO_FONE1.setForeground(Color.BLACK);
+        }
+
+        if (edtFOR_CELULAR.getText() == null || edtFOR_CELULAR.getText().length() == 0) {
+            lblVALIDACAO_CELULAR.setForeground(Color.RED);
+        } else {
+            lblVALIDACAO_CELULAR.setForeground(Color.BLACK);
+        }
+
+        if (edtFOR_CONTATO.getText() == null || edtFOR_CONTATO.getText().length() == 0) {
+            lblVALIDACAO_CONTATO.setForeground(Color.RED);
+        } else {
+            lblVALIDACAO_CONTATO.setForeground(Color.BLACK);
+        }
+
+        if (erroMessage.length() == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private String filtroConsulta() {
@@ -974,15 +1092,16 @@ public class FornecedorView extends IMenu {
         if (JOptionPane.showConfirmDialog(null, "Confirma Gravação deste Fornecedor?",
                 "Confirmação", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             try {
-                
+
+                this.validacao();
                 FornecedorModel objfornecedor = new FornecedorModel();
                 PessoaModel objpessoa = new PessoaModel();
-                
+
                 objpessoa.setPES_CODIGO(Integer.parseInt(edtPES_CODIGO.getText()));
                 objpessoa.setPES_NOME(edtFOR_NOME.getText());
                 objpessoa.setPES_FANTASIA(edtFOR_FANTASIA.getText());
                 objpessoa.setPES_FISICA(comboFOR_FISICA.getSelectedItem().toString());
-                objpessoa.setPES_CPFCNPJ(edtFOR_CNPJ.getText());
+                objpessoa.setPES_CPFCNPJ(edtFOR_CPFCNPJ.getText());
                 objpessoa.setPES_RGIE(edtFOR_IE.getText());
                 objpessoa.setPES_CADASTRO(edtFOR_CADASTRO.getText());
                 objpessoa.setPES_ENDERECO(edtFOR_ENDERECO.getText());
@@ -999,21 +1118,22 @@ public class FornecedorView extends IMenu {
                 objpessoa.setPES_EMAIL(edtFOR_EMAIL.getText());
                 objpessoa.setPES_ATIVO(comboFOR_ATIVO.getSelectedItem().toString());
                 objfornecedor.setPES_MODEL(objpessoa);
-                
+
                 objfornecedor.setFOR_CODIGO(Integer.parseInt(edtFOR_CODIGO.getText()));
                 objfornecedor.setFOR_CONTATO(edtFOR_CONTATO.getText());
-                
+
                 FornecedorController fornecedorcontroller = new FornecedorController();
                 fornecedorcontroller.gravar(getOperacao(), objfornecedor);
-                
+
                 PessoaController pessoacontroller = new PessoaController();
                 pessoacontroller.gravar(operacao, objpessoa);
-                
 
                 JOptionPane.showMessageDialog(null, "Dados Gravados com Sucesso");
                 consultar();
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, "Erro na Gravação \n" + ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Os campos com * devem ser preenchidos!\n\n "
+                        + "Erro na Gravação \n"
+                        + ex.getMessage());
             }
         }
     }//GEN-LAST:event_btnGRAVARActionPerformed
@@ -1080,12 +1200,12 @@ public class FornecedorView extends IMenu {
         if (JOptionPane.showConfirmDialog(null, "Confirma Exclusão deste Registro?",
                 "Confirmação", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
             try {
-                PessoaModel objpessoa = new PessoaModel(); 
+                PessoaModel objpessoa = new PessoaModel();
                 objpessoa.setPES_CODIGO(Integer.parseInt(edtFOR_CODIGO.getText()));
                 objpessoa.setPES_NOME(edtFOR_NOME.getText());
                 objpessoa.setPES_FANTASIA(edtFOR_FANTASIA.getText());
                 objpessoa.setPES_FISICA(comboFOR_FISICA.getSelectedItem().toString());
-                objpessoa.setPES_CPFCNPJ(edtFOR_CNPJ.getText());
+                objpessoa.setPES_CPFCNPJ(edtFOR_CPFCNPJ.getText());
                 objpessoa.setPES_RGIE(edtFOR_IE.getText());
                 objpessoa.setPES_CADASTRO(edtFOR_CADASTRO.getText());
                 objpessoa.setPES_ENDERECO(edtFOR_ENDERECO.getText());
@@ -1101,63 +1221,127 @@ public class FornecedorView extends IMenu {
                 objpessoa.setPES_EMAIL(edtFOR_EMAIL.getText());
                 objpessoa.setPES_SITE(edtFOR_SITE.getText());
                 objpessoa.setPES_ATIVO(comboFOR_ATIVO.getSelectedItem().toString());
-                
-                 FornecedorModel objfornecedor = new FornecedorModel();
-                 objfornecedor.setFOR_CODIGO(Integer.parseInt(edtFOR_CODIGO.getText()));
-                 objfornecedor.setFOR_CONTATO(edtFOR_CONTATO.getText());
-                 objfornecedor.setPES_MODEL(objpessoa);
-                
-                
+
+                FornecedorModel objfornecedor = new FornecedorModel();
+                objfornecedor.setFOR_CODIGO(Integer.parseInt(edtFOR_CODIGO.getText()));
+                objfornecedor.setFOR_CONTATO(edtFOR_CONTATO.getText());
+                objfornecedor.setPES_MODEL(objpessoa);
+
                 FornecedorController fornecedorcontroller = new FornecedorController();
                 fornecedorcontroller.excluir(objfornecedor);
 
                 JOptionPane.showMessageDialog(null, "Registro Excluído com Sucesso");
                 consultar();
-            } catch (Exception ex) {
+            } catch (HeadlessException | NumberFormatException | SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Erro na Exclusão de Registro \n" + ex.getMessage());
             }
         }
     }//GEN-LAST:event_btnEXCLUIRActionPerformed
 
-    private void edtFOR_NOMEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtFOR_NOMEActionPerformed
+    private void edtFOR_CPFCNPJKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtFOR_CPFCNPJKeyTyped
+        int quantidade = 14;
+        if (edtFOR_CPFCNPJ.getText().length() >= quantidade) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_edtFOR_CPFCNPJKeyTyped
 
-    }//GEN-LAST:event_edtFOR_NOMEActionPerformed
+    private void edtFOR_CPFCNPJKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtFOR_CPFCNPJKeyReleased
+        String campo = edtFOR_CPFCNPJ.getText();
+        if (campo.length() == 14) {
+            String cnpj;
+            cnpj = String.valueOf("" + campo.charAt(0) + campo.charAt(1) + "." + campo.charAt(2) + campo.charAt(3) + campo.charAt(4) + "." + campo.charAt(5) + campo.charAt(6) + campo.charAt(7) + "/" + campo.charAt(8) + campo.charAt(9) + campo.charAt(10) + campo.charAt(11) + "-" + campo.charAt(12) + campo.charAt(13));
+            edtFOR_CPFCNPJ.setText(cnpj);
+        }
+    }//GEN-LAST:event_edtFOR_CPFCNPJKeyReleased
 
-    private void edtFOR_ENDERECOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtFOR_ENDERECOActionPerformed
+    private void edtFOR_IEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtFOR_IEKeyTyped
+        int quantidade = 12;
+        if (edtFOR_IE.getText().length() >= quantidade) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_edtFOR_IEKeyTyped
 
-    }//GEN-LAST:event_edtFOR_ENDERECOActionPerformed
+    private void edtFOR_IEKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtFOR_IEKeyReleased
+        String campo = edtFOR_IE.getText();
+        if (campo.length() == 12) {
+            String ie;
+            ie = String.valueOf("" + campo.charAt(0) + campo.charAt(1) + campo.charAt(2) + "." + campo.charAt(3) + campo.charAt(4) + campo.charAt(5) + "." + campo.charAt(6) + campo.charAt(7) + campo.charAt(8) + "." + campo.charAt(9) + campo.charAt(10) + campo.charAt(11));
+            edtFOR_IE.setText(ie);
+        }
+    }//GEN-LAST:event_edtFOR_IEKeyReleased
 
-    private void edtFOR_NUMEROActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtFOR_NUMEROActionPerformed
+    private void edtFOR_CADASTROKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtFOR_CADASTROKeyTyped
+        int quantidade = 8;
+        if (edtFOR_CADASTRO.getText().length() >= quantidade) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_edtFOR_CADASTROKeyTyped
 
-    }//GEN-LAST:event_edtFOR_NUMEROActionPerformed
+    private void edtFOR_CADASTROKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtFOR_CADASTROKeyReleased
+        String campo = edtFOR_CADASTRO.getText();
+        if (campo.length() == 8) {
+            String cadastro;
+            cadastro = String.valueOf("" + campo.charAt(0) + campo.charAt(1) + "/" + campo.charAt(2) + campo.charAt(3) + "/" + campo.charAt(4) + campo.charAt(5) + campo.charAt(6) + campo.charAt(7));
+            edtFOR_CADASTRO.setText(cadastro);
+        }
+    }//GEN-LAST:event_edtFOR_CADASTROKeyReleased
 
-    private void edtFOR_COMPLEMENTOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtFOR_COMPLEMENTOActionPerformed
+    private void edtFOR_FONE1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtFOR_FONE1KeyTyped
+        int quantidade = 10;
+        if (edtFOR_FONE1.getText().length() >= quantidade) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_edtFOR_FONE1KeyTyped
 
-    }//GEN-LAST:event_edtFOR_COMPLEMENTOActionPerformed
+    private void edtFOR_FONE1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtFOR_FONE1KeyReleased
+        String campo = edtFOR_FONE1.getText();
+        if (campo.length() == 10) {
+            String fone1;
+            fone1 = String.valueOf("" + "(" + campo.charAt(0) + campo.charAt(1) + ") " + campo.charAt(2) + campo.charAt(3) + campo.charAt(4) + campo.charAt(5) + "-" + campo.charAt(6) + campo.charAt(7) + campo.charAt(8) + campo.charAt(9));
+            edtFOR_FONE1.setText(fone1);
+        }
+    }//GEN-LAST:event_edtFOR_FONE1KeyReleased
 
-    private void edtFOR_BAIRROActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtFOR_BAIRROActionPerformed
+    private void edtFOR_FONE2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtFOR_FONE2KeyTyped
+        int quantidade = 10;
+        if (edtFOR_FONE2.getText().length() >= quantidade) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_edtFOR_FONE2KeyTyped
 
-    }//GEN-LAST:event_edtFOR_BAIRROActionPerformed
+    private void edtFOR_FONE2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtFOR_FONE2KeyReleased
+        String campo = edtFOR_FONE2.getText();
+        if (campo.length() == 10) {
+            String fone2;
+            fone2 = String.valueOf("" + "(" + campo.charAt(0) + campo.charAt(1) + ") " + campo.charAt(2) + campo.charAt(3) + campo.charAt(4) + campo.charAt(5) + "-" + campo.charAt(6) + campo.charAt(7) + campo.charAt(8) + campo.charAt(9));
+            edtFOR_FONE2.setText(fone2);
+        }
+    }//GEN-LAST:event_edtFOR_FONE2KeyReleased
 
-    private void edtFOR_CIDADEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtFOR_CIDADEActionPerformed
-  
-    }//GEN-LAST:event_edtFOR_CIDADEActionPerformed
+    private void edtFOR_CELULARKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtFOR_CELULARKeyTyped
+        int quantidade = 10;
+        if (edtFOR_CELULAR.getText().length() >= quantidade) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_edtFOR_CELULARKeyTyped
 
-    private void edtFOR_EMAILActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtFOR_EMAILActionPerformed
+    private void edtFOR_CELULARKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_edtFOR_CELULARKeyReleased
+        String campo = edtFOR_CELULAR.getText();
+        if (campo.length() == 10) {
+            String fone2;
+            fone2 = String.valueOf("" + "(" + campo.charAt(0) + campo.charAt(1) + ") " + campo.charAt(2) + campo.charAt(3) + campo.charAt(4) + campo.charAt(5) + "-" + campo.charAt(6) + campo.charAt(7) + campo.charAt(8) + campo.charAt(9));
+            edtFOR_CELULAR.setText(fone2);
+        }
+    }//GEN-LAST:event_edtFOR_CELULARKeyReleased
 
-    }//GEN-LAST:event_edtFOR_EMAILActionPerformed
-
-    private void edtFOR_FANTASIAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtFOR_FANTASIAActionPerformed
-     
-    }//GEN-LAST:event_edtFOR_FANTASIAActionPerformed
-
-    private void edtFOR_SITEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtFOR_SITEActionPerformed
-
-    }//GEN-LAST:event_edtFOR_SITEActionPerformed
-
-    private void edtFOR_CONTATOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtFOR_CONTATOActionPerformed
-   
-    }//GEN-LAST:event_edtFOR_CONTATOActionPerformed
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        //funcionalidade de mostrar a data atual.
+        Calendar c1 = Calendar.getInstance(new Locale("pt-br"));
+        lblDATA.setText(c1.get(Calendar.DAY_OF_MONTH) + "/" + c1.get(Calendar.MONTH) + "/" + c1.get(Calendar.YEAR));
+        //funcionalidade de mostar a hora atual. 
+        Timer time = new Timer(1000, new FornecedorView.hora());
+        time.start();
+    }//GEN-LAST:event_formWindowOpened
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnALTERAR;
@@ -1179,24 +1363,26 @@ public class FornecedorView extends IMenu {
     private javax.swing.JTextField edtCONS_LOGIN;
     private javax.swing.JTextField edtCONS_NOME;
     private javax.swing.JTextField edtFOR_BAIRRO;
-    private javax.swing.JFormattedTextField edtFOR_CADASTRO;
-    private javax.swing.JFormattedTextField edtFOR_CELULAR;
+    private javax.swing.JTextField edtFOR_CADASTRO;
+    private javax.swing.JTextField edtFOR_CELULAR;
     private javax.swing.JFormattedTextField edtFOR_CEP;
     private javax.swing.JTextField edtFOR_CIDADE;
-    private javax.swing.JFormattedTextField edtFOR_CNPJ;
     private javax.swing.JTextField edtFOR_CODIGO;
     private javax.swing.JTextField edtFOR_COMPLEMENTO;
     private javax.swing.JTextField edtFOR_CONTATO;
+    private javax.swing.JTextField edtFOR_CPFCNPJ;
     private javax.swing.JTextField edtFOR_EMAIL;
     private javax.swing.JTextField edtFOR_ENDERECO;
     private javax.swing.JTextField edtFOR_FANTASIA;
-    private javax.swing.JFormattedTextField edtFOR_FONE1;
-    private javax.swing.JFormattedTextField edtFOR_FONE2;
-    private javax.swing.JFormattedTextField edtFOR_IE;
+    private javax.swing.JTextField edtFOR_FONE1;
+    private javax.swing.JTextField edtFOR_FONE2;
+    private javax.swing.JTextField edtFOR_IE;
     private javax.swing.JTextField edtFOR_NOME;
     private javax.swing.JTextField edtFOR_NUMERO;
     private javax.swing.JTextField edtFOR_SITE;
     private javax.swing.JTextField edtPES_CODIGO;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -1214,6 +1400,7 @@ public class FornecedorView extends IMenu {
     private javax.swing.JLabel lblCONS_LOGIN;
     private javax.swing.JLabel lblCONS_NOME;
     private javax.swing.JLabel lblCodigo2;
+    private javax.swing.JLabel lblDATA;
     private javax.swing.JLabel lblFORI_FONE1;
     private javax.swing.JLabel lblFORI_UF;
     private javax.swing.JLabel lblFOR_ATIVO;
@@ -1234,9 +1421,28 @@ public class FornecedorView extends IMenu {
     private javax.swing.JLabel lblFOR_NOME;
     private javax.swing.JLabel lblFOR_NUMERO;
     private javax.swing.JLabel lblFOR_SITE;
+    private javax.swing.JLabel lblHORA;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblVALIDACAO_CADASTRO;
+    private javax.swing.JLabel lblVALIDACAO_CELULAR;
+    private javax.swing.JLabel lblVALIDACAO_CNPJ;
+    private javax.swing.JLabel lblVALIDACAO_CONTATO;
+    private javax.swing.JLabel lblVALIDACAO_FANTASIA;
+    private javax.swing.JLabel lblVALIDACAO_FONE1;
+    private javax.swing.JLabel lblVALIDACAO_IE;
+    private javax.swing.JLabel lblVALIDACAO_NOME;
     private javax.swing.JPanel painelCONSULTA;
     private javax.swing.JPanel painelDADOS;
     private javax.swing.JTable tblConsulta;
     // End of variables declaration//GEN-END:variables
+
+    //classe interna com funcionalidade de mostrar a hora atual.
+    class hora implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            Calendar now = Calendar.getInstance();
+            lblHORA.setText(String.format("%1$tH:%1$tM:%1$tS", now));
+        }
+    }
 }

@@ -12,9 +12,12 @@ import trabalho.dao.LoginDao;
 import trabalho.model.UsuarioModel;
 
 public class LoginView extends javax.swing.JFrame {
+    
+    private final char senha;
 
     public LoginView() {
         initComponents();
+        senha = passUSU_SENHA.getEchoChar();
     }
 
     @SuppressWarnings("unchecked")
@@ -31,6 +34,8 @@ public class LoginView extends javax.swing.JFrame {
         iconTela = new javax.swing.JLabel();
         iconSenha = new javax.swing.JLabel();
         iconLogin = new javax.swing.JLabel();
+        chkUSU_MOSTRA = new javax.swing.JCheckBox();
+        iconMOSTRA = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Cadastro");
@@ -41,21 +46,11 @@ public class LoginView extends javax.swing.JFrame {
         labelLogin.setText("Login");
 
         textUSU_LOGIN.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        textUSU_LOGIN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textUSU_LOGINActionPerformed(evt);
-            }
-        });
 
         labelSenha.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelSenha.setText("Senha");
 
         passUSU_SENHA.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        passUSU_SENHA.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passUSU_SENHAActionPerformed(evt);
-            }
-        });
 
         buttonEntrar.setText("Entrar");
         buttonEntrar.addActionListener(new java.awt.event.ActionListener() {
@@ -85,6 +80,17 @@ public class LoginView extends javax.swing.JFrame {
 
         iconLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalho/imagens/iconeFisico_1.png"))); // NOI18N
 
+        chkUSU_MOSTRA.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        chkUSU_MOSTRA.setText("Mostrar Senha");
+        chkUSU_MOSTRA.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        chkUSU_MOSTRA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkUSU_MOSTRAActionPerformed(evt);
+            }
+        });
+
+        iconMOSTRA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalho/imagens/exibirSenha.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -96,29 +102,29 @@ public class LoginView extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(iconLogin, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(iconSenha, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(labelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(textUSU_LOGIN, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(labelSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(passUSU_SENHA, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(buttonEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(buttonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(4, 4, 4))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(iconTela, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(108, 108, 108)
+                                .addComponent(buttonEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(buttonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(iconMOSTRA)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(chkUSU_MOSTRA))
+                            .addComponent(labelLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(textUSU_LOGIN, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(passUSU_SENHA, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(labelAjuda)))
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(iconTela, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(143, 143, 143))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,29 +140,25 @@ public class LoginView extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(labelSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(passUSU_SENHA, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(iconSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(iconSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(passUSU_SENHA, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(chkUSU_MOSTRA)
+                    .addComponent(iconMOSTRA))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonEntrar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addGap(35, 35, 35)
                 .addComponent(labelAjuda, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        setSize(new java.awt.Dimension(461, 499));
+        setSize(new java.awt.Dimension(445, 523));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void textUSU_LOGINActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textUSU_LOGINActionPerformed
-
-    }//GEN-LAST:event_textUSU_LOGINActionPerformed
-
-    private void passUSU_SENHAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passUSU_SENHAActionPerformed
-
-    }//GEN-LAST:event_passUSU_SENHAActionPerformed
 
     private void buttonEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEntrarActionPerformed
 
@@ -191,7 +193,7 @@ public class LoginView extends javax.swing.JFrame {
 
             } else {
 
-                JOptionPane.showMessageDialog(null, "Usúario ou senha incorreta, tente novamente!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Usúario ou senha incorreta, tente novamente!", "Aviso", JOptionPane.ERROR_MESSAGE);
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Por motivos deconhecidos não foi possivel logar" + ex.getMessage());
@@ -213,10 +215,22 @@ public class LoginView extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Para logar insira seu e-mail e sua senha corporativa.", "Menssagem", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_labelAjudaMouseClicked
 
+    private void chkUSU_MOSTRAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkUSU_MOSTRAActionPerformed
+      if (chkUSU_MOSTRA.isSelected()) {
+          passUSU_SENHA.setEchoChar('\u0000'); // tem como funcionalidade remover a mascara da senha e mostrar a senha.
+          iconMOSTRA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalho/imagens/ocultarSenha.png")));
+      } else {
+          passUSU_SENHA.setEchoChar(senha);
+          iconMOSTRA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trabalho/imagens/exibirSenha.png")));
+      }
+    }//GEN-LAST:event_chkUSU_MOSTRAActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonCadastrar;
     private javax.swing.JButton buttonEntrar;
+    private javax.swing.JCheckBox chkUSU_MOSTRA;
     private javax.swing.JLabel iconLogin;
+    private javax.swing.JLabel iconMOSTRA;
     private javax.swing.JLabel iconSenha;
     private javax.swing.JLabel iconTela;
     private javax.swing.JLabel labelAjuda;

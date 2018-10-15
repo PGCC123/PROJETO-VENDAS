@@ -6,12 +6,12 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
@@ -160,7 +160,6 @@ public class ClienteView extends IMenu {
         jLabel1 = new javax.swing.JLabel();
         lblHORA = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        lblUSUARIO = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -834,10 +833,6 @@ public class ClienteView extends IMenu {
         getContentPane().add(jLabel2);
         jLabel2.setBounds(1110, 120, 70, 30);
 
-        lblUSUARIO.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(lblUSUARIO);
-        lblUSUARIO.setBounds(1120, 180, 170, 30);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -914,10 +909,6 @@ public class ClienteView extends IMenu {
                 }
             }
         }); */
-    }
-    
-    public void mostrarUSU(UsuarioModel usuario) {
-        lblUSUARIO.setText(usuario.getUSU_NOME());
     }
 
     private boolean validacao() {
@@ -1109,7 +1100,7 @@ public class ClienteView extends IMenu {
         if (registro >= 0 && registro < lista.size()) {
             // exibe os dados do registro na aba Dados
             mostrar(lista.get(registro));
-           
+
             // posicionar o registro selecionado na tabela (JTable)
             tblConsulta.changeSelection(registro, 0, false, false);
         }
@@ -1247,7 +1238,7 @@ public class ClienteView extends IMenu {
         String campo = edtCLI_FONE1.getText();
         if (campo.length() == 10) {
             String fone1;
-            fone1 = String.valueOf("" + "(" + campo.charAt(0) + campo.charAt(1) + ")" + campo.charAt(2) + campo.charAt(3) + campo.charAt(4) + campo.charAt(5) + "-" + campo.charAt(6) + campo.charAt(7) + campo.charAt(8) + campo.charAt(9));
+            fone1 = String.valueOf("" + "(" + campo.charAt(0) + campo.charAt(1) + ") " + campo.charAt(2) + campo.charAt(3) + campo.charAt(4) + campo.charAt(5) + "-" + campo.charAt(6) + campo.charAt(7) + campo.charAt(8) + campo.charAt(9));
             edtCLI_FONE1.setText(fone1);
         }
     }//GEN-LAST:event_edtCLI_FONE1KeyReleased
@@ -1256,7 +1247,7 @@ public class ClienteView extends IMenu {
         String campo = edtCLI_FONE2.getText();
         if (campo.length() == 10) {
             String fone2;
-            fone2 = String.valueOf("" + "(" + campo.charAt(0) + campo.charAt(1) + ")" + campo.charAt(2) + campo.charAt(3) + campo.charAt(4) + campo.charAt(5) + "-" + campo.charAt(6) + campo.charAt(7) + campo.charAt(8) + campo.charAt(9));
+            fone2 = String.valueOf("" + "(" + campo.charAt(0) + campo.charAt(1) + ") " + campo.charAt(2) + campo.charAt(3) + campo.charAt(4) + campo.charAt(5) + "-" + campo.charAt(6) + campo.charAt(7) + campo.charAt(8) + campo.charAt(9));
             edtCLI_FONE2.setText(fone2);
         }
     }//GEN-LAST:event_edtCLI_FONE2KeyReleased
@@ -1272,7 +1263,7 @@ public class ClienteView extends IMenu {
         String campo = edtCLI_CELULAR.getText();
         if (campo.length() == 10) {
             String fone2;
-            fone2 = String.valueOf("" + "(" + campo.charAt(0) + campo.charAt(1) + ")" + campo.charAt(2) + campo.charAt(3) + campo.charAt(4) + campo.charAt(5) + "-" + campo.charAt(6) + campo.charAt(7) + campo.charAt(8) + campo.charAt(9));
+            fone2 = String.valueOf("" + "(" + campo.charAt(0) + campo.charAt(1) + ") " + campo.charAt(2) + campo.charAt(3) + campo.charAt(4) + campo.charAt(5) + "-" + campo.charAt(6) + campo.charAt(7) + campo.charAt(8) + campo.charAt(9));
             edtCLI_CELULAR.setText(fone2);
         }
     }//GEN-LAST:event_edtCLI_CELULARKeyReleased
@@ -1287,13 +1278,11 @@ public class ClienteView extends IMenu {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         //funcionalidade de mostrar a data atual.
         Calendar c1 = Calendar.getInstance(new Locale("pt-br"));
-        lblDATA.setText(c1.get(Calendar.DAY_OF_MONTH) + "/" + c1.get(Calendar.DATE) + "/" + c1.get(Calendar.YEAR));
-
-        //hora 
+        lblDATA.setText(c1.get(Calendar.DAY_OF_MONTH)  + "/" +  c1.get(Calendar.MONTH) + "/" + c1.get(Calendar.YEAR));
+        //funcionalidade de mostar a hora atual. 
         Timer time = new Timer(1000, new hora());
         time.start();
     }//GEN-LAST:event_formWindowOpened
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnALTERAR;
@@ -1367,7 +1356,6 @@ public class ClienteView extends IMenu {
     private javax.swing.JLabel lblDATA;
     private javax.swing.JLabel lblHORA;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JLabel lblUSUARIO;
     private javax.swing.JLabel lblUSU_ATIVO;
     private javax.swing.JLabel lblUSU_CADASTRO;
     private javax.swing.JLabel lblVALIDACAO_CADASTRO;
@@ -1384,6 +1372,7 @@ public class ClienteView extends IMenu {
 
     //classe interna com funcionalidade de mostrar a hora atual.
     class hora implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent event) {
             Calendar now = Calendar.getInstance();
